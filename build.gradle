@@ -10,8 +10,13 @@ version '1.0-SNAPSHOT'
         mavenCentral()
         jcenter()
     }
+project.ext.lwjglVersion = "3.0.0a"
 
     dependencies {
         implementation "org.jetbrains.kotlin:kotlin-stdlib"
         implementation "uk.co.electronstudio.sdl2gdx:sdl2gdx:1.0.+"
+        compile "org.lwjgl:lwjgl:${lwjglVersion}"
+        compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
+        compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
+        compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
     }
