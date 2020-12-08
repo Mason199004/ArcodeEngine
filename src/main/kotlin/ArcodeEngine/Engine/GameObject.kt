@@ -1,4 +1,4 @@
-package ArcodeEngine
+package ArcodeEngine.Engine
 
 abstract class GameObject
 {
