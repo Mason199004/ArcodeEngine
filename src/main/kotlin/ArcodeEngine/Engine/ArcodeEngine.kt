@@ -1,4 +1,4 @@
-package ArcodeEngine
+package ArcodeEngine.Engine
 
 class ArcodeEngine
 {

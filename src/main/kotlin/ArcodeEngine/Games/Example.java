@@ -1,12 +1,11 @@
 package ArcodeEngine.Games;
 
 
-import ArcodeEngine.Game;
-import ArcodeEngine.GameObject;
+import ArcodeEngine.Engine.Game;
+import ArcodeEngine.Engine.GameObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Example extends Game
 {
