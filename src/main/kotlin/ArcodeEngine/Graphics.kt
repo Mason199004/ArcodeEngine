@@ -25,15 +25,16 @@ import org.lwjgl.opengl.GL11.*
 import org.lwjgl.system.MemoryUtil.*
 
 
-public class Graphics
+ class Graphics
 {
-
+   //TODO: fix later
+   /*
    companion object
    {
-      var window: Long
+      var window: Long = NULL
       fun init() {
 
-         SDL.SDL_Init(SDL.SDL_INIT_JOYSTICK)
+
          GLFWErrorCallback.createPrint(System.err).set()
 
          // Initialize GLFW. Most GLFW functions will not work before doing this.
@@ -65,7 +66,7 @@ public class Graphics
             GLFWKeyCallback({ window, key, scancode, action, mods ->
                if (key === GLFW_KEY_ESCAPE && action === GLFW_RELEASE) glfwSetWindowShouldClose(
                   window,
-                  true.toInt()
+                  1
                ) // We will detect this in the rendering loop
             })
          )
@@ -103,9 +104,8 @@ public class Graphics
          glfwShowWindow(window)
 
       }
-
+   */
       fun drawRect(x: Int, y: Int, width: Int, height: Int): Boolean {
          return false
       }
-   }
 }

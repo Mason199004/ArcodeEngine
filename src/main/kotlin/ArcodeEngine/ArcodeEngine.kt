@@ -3,8 +3,13 @@ package ArcodeEngine
 class ArcodeEngine
 {
     var Games: MutableList<Game> = mutableListOf()
-    fun main(args: Array<String>)
+    companion object
     {
-
+        @JvmStatic
+        fun main(args: Array<String>)
+        {
+            Controller.init()
+        }
     }
+
 }
