@@ -6,7 +6,7 @@ import java.util.*
 class StateManager {
     companion object {
         private val states: Stack<State> = Stack()
-        private val currentState: State? = null
+        private lateinit var currentState: State
 
         fun tickState() {
             if (currentState != null) {
