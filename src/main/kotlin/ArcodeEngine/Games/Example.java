@@ -15,9 +15,14 @@ public class Example extends Game
 		super(Name);
 	}
 
-	@NotNull
+
 	@Override
-	public ArrayList<GameObject> getEntities() {
-		return Entities;
+	public void tick() {
+
+	}
+
+	@Override
+	public void render() {
+
 	}
 }
