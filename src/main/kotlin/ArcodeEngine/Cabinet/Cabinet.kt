@@ -17,6 +17,8 @@ class Cabinet : GameState("Arcade Cabinet") {
     init {
         ArcodeEngine.submitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, this)
         window = Window(Pair(720, 480))
+
+        init()
     }
 
     companion object {
