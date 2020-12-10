@@ -10,7 +10,8 @@ class Controller
         {
             var arr = FloatArray(2)
             if(GLFW.glfwJoystickPresent(GLFW.GLFW_JOYSTICK_1))
-                GLFW.glfwGetJoystickAxes(GLFW.GLFW_JOYSTICK_1)!!.get(arr)
+                arr[0] = GLFW.glfwGetJoystickAxes(GLFW.GLFW_JOYSTICK_1)!![0]
+                arr[1] = GLFW.glfwGetJoystickAxes(GLFW.GLFW_JOYSTICK_1)!![1]
 
             return arr
         }
