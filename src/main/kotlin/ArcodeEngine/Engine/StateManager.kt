@@ -2,11 +2,10 @@ package ArcodeEngine.Engine
 
 import java.util.*
 
-
 class StateManager {
     companion object {
         private val states: Stack<State> = Stack()
-        private lateinit var currentState: State
+        private var currentState: State? = null
 
         fun tickState() {
             if (currentState != null) {
@@ -21,10 +20,10 @@ class StateManager {
                     delta += (now - lastTime) / ns
                     lastTime = now
                     while (delta >= 1) {
-                        currentState.tick()
+                        currentState?.tick()
                         delta--
                     }
-                    currentState.render()
+                    currentState?.render()
                     frames++
                     if (System.currentTimeMillis() - timer > 1000) {
                         timer += 1000
@@ -37,6 +36,7 @@ class StateManager {
 
         fun pushState(state: State) {
             states.push(state)
+            currentState = state
         }
 
         fun popState(): State {

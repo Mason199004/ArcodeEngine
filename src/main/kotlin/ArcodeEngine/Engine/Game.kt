@@ -5,4 +5,4 @@ interface State {
     fun render();
 }
 
-abstract class Game(Name: String) : State {}
+abstract class GameState(Name: String) : State {}
