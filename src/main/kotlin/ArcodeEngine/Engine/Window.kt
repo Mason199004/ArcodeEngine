@@ -84,4 +84,8 @@ class Window(private var dimensions: Pair<Int, Int>) {
         GLFW.glfwTerminate();
         GLFW.glfwSetErrorCallback(null)?.free();
     }
+
+    fun getWindowHandle(): Long {
+        return window
+    }
 }

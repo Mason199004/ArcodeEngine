@@ -5,12 +5,6 @@ class ArcodeEngine
     var Games: MutableList<GameState> = mutableListOf()
     companion object
     {
-        @JvmStatic
-        fun main(args: Array<String>)
-        {
-
-        }
-
         fun submitStateChangeRequest(request: StateRequest, state: State) {
             when(request) {
                 StateRequest.QUIT_CURRENT -> StateManager.popState()
