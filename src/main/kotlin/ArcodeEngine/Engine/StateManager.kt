@@ -5,7 +5,7 @@ import java.util.*
 class StateManager {
     companion object {
         private val states: Stack<State> = Stack()
-        private var currentState: State? = null
+        private lateinit var currentState: State //the entire point of using kotlin is to avoid null
 
         fun tickState() {
             if (currentState != null) {
@@ -20,10 +20,11 @@ class StateManager {
                     delta += (now - lastTime) / ns
                     lastTime = now
                     while (delta >= 1) {
-                        currentState?.tick()
+                        currentState.tick()
                         delta--
                     }
-                    currentState?.render()
+                    currentState.tick()
+                    currentState.render()
                     frames++
                     if (System.currentTimeMillis() - timer > 1000) {
                         timer += 1000
@@ -37,6 +38,7 @@ class StateManager {
         fun pushState(state: State) {
             states.push(state)
             currentState = state
+            currentState.init()
         }
 
         fun popState(): State {

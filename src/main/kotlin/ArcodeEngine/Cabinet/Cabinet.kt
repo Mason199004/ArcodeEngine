@@ -2,6 +2,7 @@ package ArcodeEngine.Cabinet
 
 import ArcodeEngine.Engine.ArcodeEngine
 import ArcodeEngine.Engine.GameState
+import ArcodeEngine.Engine.StateManager
 import ArcodeEngine.Engine.Window
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL
@@ -15,8 +16,9 @@ class Cabinet : GameState("Arcade Cabinet") {
     private var window: Window
 
     init {
-        ArcodeEngine.submitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, this)
         window = Window(Pair(720, 480))
+        ArcodeEngine.submitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, this)
+
     }
 
     companion object {
@@ -26,10 +28,11 @@ class Cabinet : GameState("Arcade Cabinet") {
         }
     }
 
-    fun init() {
+    override fun init() {
         GL.createCapabilities();
 
         glClearColor(1f, 0f, 0f, 0f)
+        StateManager.tickState()
     }
 
     override fun tick() {}
