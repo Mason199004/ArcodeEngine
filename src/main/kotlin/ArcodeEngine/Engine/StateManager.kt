@@ -28,7 +28,7 @@ class StateManager {
                     frames++
                     if (System.currentTimeMillis() - timer > 1000) {
                         timer += 1000
-                        println("FPS: $frames")
+                        println("FPS: $frames, Joystick1_State: ${Controller.getJoystickAxes()[0]} ${Controller.getJoystickAxes()[1]}")
                         frames = 0
                     }
                 }
