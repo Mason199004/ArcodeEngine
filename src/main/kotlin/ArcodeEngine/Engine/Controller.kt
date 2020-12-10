@@ -8,10 +8,11 @@ class Controller
     {
         fun getJoystickAxes() : FloatArray
         {
+            var arr = FloatArray(2)
             if(GLFW.glfwJoystickPresent(GLFW.GLFW_JOYSTICK_1))
-                return GLFW.glfwGetJoystickAxes(GLFW.GLFW_JOYSTICK_1)!!.array()
+                GLFW.glfwGetJoystickAxes(GLFW.GLFW_JOYSTICK_1)!!.get(arr)
 
-            return FloatArray(2)
+            return arr
         }
     }
 }
