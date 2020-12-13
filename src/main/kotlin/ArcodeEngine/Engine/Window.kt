@@ -1,5 +1,6 @@
 package ArcodeEngine.Engine
 
+import org.joml.Matrix4f
 import org.lwjgl.glfw.*
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.system.MemoryUtil
@@ -12,7 +13,12 @@ class Window(private var dimensions: Pair<Int, Int>) {
 
     private var window: Long = 0
 
+    companion object {
+        lateinit var projectionMatrix: Matrix4f
+    }
+
     init {
+        projectionMatrix.identity().ortho(0f, dimensions.first.toFloat(), 0f, dimensions.second.toFloat(), -1f, 1f);
         init()
     }
 
