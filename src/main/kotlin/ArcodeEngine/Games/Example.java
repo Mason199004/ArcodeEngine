@@ -25,4 +25,9 @@ public class Example extends GameState
 	public void render() {
 
 	}
+
+	@Override
+	public void init() {
+
+	}
 }
