@@ -2,16 +2,12 @@ package ArcodeEngine.Engine
 
 import ArcodeEngine.Cabinet.Cabinet
 import org.lwjgl.glfw.GLFW
-import org.lwjgl.glfw.GLFWJoystickCallback
-import java.lang.Exception
-import java.lang.IllegalArgumentException
-import kotlin.reflect.KProperty
 
 class Controller
 {
     companion object
     {
-        private fun getJoystickAxes(joy: Int) : FloatArray
+        private fun GetJoystickAxes(joy: Int) : FloatArray
         {
             val arr = FloatArray(2)
             //Joystick1 is reserved or something, always -1
@@ -45,17 +41,17 @@ class Controller
             Left(1, 0),
             UpLeft(1, 1),
             None(0,0);
-            fun getX(): Int
+            fun GetX(): Int
             {
                 return xAxis
             }
-            fun getY(): Int
+            fun GetY(): Int
             {
                 return yAxis
             }
         }
 
-        private fun getJoyState(Joystick: Int) : JoyState
+        private fun GetJoyState(Joystick: Int) : JoyState
         {
             var raw = FloatArray(2)
             if (Joystick == 1)
@@ -76,10 +72,10 @@ class Controller
                     raw[1] = buf[1]
                 }
             }
-            return getJoyStateFromAxis(raw[0].toInt(), raw[1].toInt())
+            return GetJoyStateFromAxis(raw[0].toInt(), raw[1].toInt())
         }
 
-        private fun getJoyStateFromAxis(xAxis: Int, yAxis: Int) : JoyState
+        private fun GetJoyStateFromAxis(xAxis: Int, yAxis: Int) : JoyState
         {
 
             val rawJoyState: Array<Float> = arrayOf(xAxis.toFloat(), yAxis.toFloat())
@@ -116,9 +112,9 @@ class Controller
             throw RuntimeException("Joystick returned an invalid state!")
         }
 
-        fun getJoystickState(Joystick: Int) : JoyState
+        fun GetJoystickState(Joystick: Int) : JoyState
         {
-            val state = getJoyState(Joystick)
+            val state = GetJoyState(Joystick)
             if (state == JoyState.None)
             {
                 when (Joystick)
@@ -147,7 +143,7 @@ class Controller
                         {
                             xAxis--
                         }
-                        return getJoyStateFromAxis(xAxis, yAxis)
+                        return GetJoyStateFromAxis(xAxis, yAxis)
                     }
                     2 ->
                     {
@@ -173,7 +169,7 @@ class Controller
                         {
                             xAxis--
                         }
-                        return getJoyStateFromAxis(xAxis, yAxis)
+                        return GetJoyStateFromAxis(xAxis, yAxis)
                     }
                 }
             }

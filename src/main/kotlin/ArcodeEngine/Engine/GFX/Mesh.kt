@@ -19,10 +19,10 @@ class Texture(var path: String) {
     var textureID: Int
 
     init {
-        textureID = load(path)
+        textureID = Load(path)
     }
 
-    private fun load(path: String): Int {
+    private fun Load(path: String): Int {
         var pixels: IntArray? = null
         var IMG_SIZE = 0
         try {

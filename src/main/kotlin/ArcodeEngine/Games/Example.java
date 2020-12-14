@@ -17,17 +17,17 @@ public class Example extends GameState
 
 
 	@Override
-	public void tick() {
+	public void Tick() {
 
 	}
 
 	@Override
-	public void render() {
+	public void Render() {
 
 	}
 
 	@Override
-	public void init() {
+	public void Init() {
 
 	}
 }

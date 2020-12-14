@@ -10,13 +10,13 @@ class ArcodeEngine
     companion object
     {
         var Assets: MutableMap<Long, String> = mutableMapOf()
-        fun submitStateChangeRequest(request: StateRequest, state: GameState) {
+        fun SubmitStateChangeRequest(request: StateRequest, state: GameState) {
             when(request) {
                 StateRequest.QUIT_CURRENT -> StateManager.popState()
                 StateRequest.PUSH -> StateManager.pushState(state)
             }
         }
-        fun registerAsset(Asset: String) : Long
+        fun RegisterAsset(Asset: String) : Long
         {
 
             var num: Long

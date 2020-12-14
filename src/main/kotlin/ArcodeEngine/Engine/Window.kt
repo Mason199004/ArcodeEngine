@@ -91,7 +91,7 @@ class Window(private var dimensions: Pair<Int, Int>) {
         GLFW.glfwSetErrorCallback(null)?.free();
     }
 
-    fun getWindowHandle(): Long {
+    fun GetWindowHandle(): Long {
         return window
     }
 }

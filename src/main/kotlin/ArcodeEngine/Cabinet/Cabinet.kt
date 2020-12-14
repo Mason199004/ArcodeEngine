@@ -16,24 +16,24 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
 
     init {
 
-        ArcodeEngine.submitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, this)
+        ArcodeEngine.SubmitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, this)
 
     }
 
     companion object {
-        val TEX1 = ArcodeEngine.registerAsset("tex1")
-        val TEX2 = ArcodeEngine.registerAsset("tex2")
-        val TEX3 = ArcodeEngine.registerAsset("tex3")
-        val TEX4 = ArcodeEngine.registerAsset("tex4")
-        val TEX5 = ArcodeEngine.registerAsset("tex5")
-        val TEX6 = ArcodeEngine.registerAsset("tex6")
+        val TEX1 = ArcodeEngine.RegisterAsset("tex1")
+        val TEX2 = ArcodeEngine.RegisterAsset("tex2")
+        val TEX3 = ArcodeEngine.RegisterAsset("tex3")
+        val TEX4 = ArcodeEngine.RegisterAsset("tex4")
+        val TEX5 = ArcodeEngine.RegisterAsset("tex5")
+        val TEX6 = ArcodeEngine.RegisterAsset("tex6")
 
         @JvmStatic
         lateinit var wind: Window
         @JvmStatic
         fun getWindow() : Long
         {
-            return wind.getWindowHandle()
+            return wind.GetWindowHandle()
         }
 
         @JvmStatic
@@ -43,11 +43,11 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         }
     }
 
-    override fun init() {
+    override fun Init() {
         GL.createCapabilities();
 
         glClearColor(1f, 0f, 0f, 0f)
-        StateManager.tickState()
+        StateManager.TickState()
     }
     var xpos = 1f
     var ypos = 1f
@@ -58,7 +58,7 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
     var rectxspeed = 0f
     var rectyspeed = 0f
     var ticks = 0
-    override fun tick()
+    override fun Tick()
     {
         if (ticks == 1)
         {
@@ -75,17 +75,17 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         }
         if (ticks % 10 == 0)
         {
-            val joyState1 = Controller.getJoystickState(1)
-            val joyState2 = Controller.getJoystickState(2)
+            val joyState1 = Controller.GetJoystickState(1)
+            val joyState2 = Controller.GetJoystickState(2)
             //r1xpos -= joyState.getX() * 0.025f
-            r1ypos += joyState1.getY() * 0.025f
-            r2ypos += joyState2.getY() * 0.025f
+            r1ypos += joyState1.GetY() * 0.025f
+            r2ypos += joyState2.GetY() * 0.025f
         }
         xpos += (rectxspeed * 0.0025f)
         ypos += (rectyspeed * 0.0025f)
         ticks++
     }
-    override fun render() {
+    override fun Render() {
         glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
         glColor3f(0.0f, 0.0f, 0.0f)
         glBegin(GL_QUADS)
@@ -109,7 +109,7 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         glVertex2f(0.025f + xpos, 0.025f + ypos)
 
         glEnd()
-        GLFW.glfwSwapBuffers(window.getWindowHandle())
+        GLFW.glfwSwapBuffers(window.GetWindowHandle())
 
         GLFW.glfwPollEvents()
     }

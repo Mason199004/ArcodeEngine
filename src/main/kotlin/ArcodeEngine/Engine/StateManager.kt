@@ -9,7 +9,7 @@ class StateManager {
         private val states: Stack<GameState> = Stack()
         private lateinit var currentState: GameState
 
-        fun tickState() {
+        fun TickState() {
             var lastTime = System.nanoTime()
             val amountOfTicks = 60.0
             val ns = 1000000000 / amountOfTicks
@@ -21,19 +21,19 @@ class StateManager {
                 delta += (now - lastTime) / ns
                 lastTime = now
                 while (delta >= 1) {
-                    currentState.tick()
+                    currentState.Tick()
                     delta--
                 }
-                currentState.tick()
-                currentState.render()
+                currentState.Tick()
+                currentState.Render()
                 frames++
                 if (System.currentTimeMillis() - timer > 1000) {
                     timer += 1000
-                    println("FPS: $frames, Joystick2_State: ${Controller.getJoystickState(1)}")
+                    println("FPS: $frames, Joystick2_State: ${Controller.GetJoystickState(1)}")
                     frames = 0
                 }
 
-                if(GLFW.glfwWindowShouldClose(currentState.window.getWindowHandle())) {
+                if(GLFW.glfwWindowShouldClose(currentState.window.GetWindowHandle())) {
                     currentState.window.destroy()
                     exitProcess(0)
                 }
@@ -43,7 +43,7 @@ class StateManager {
         fun pushState(state: GameState) {
             states.push(state)
             currentState = state
-            currentState.init()
+            currentState.Init()
         }
 
         fun popState(): GameState {
