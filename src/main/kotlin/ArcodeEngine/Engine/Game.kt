@@ -6,4 +6,4 @@ interface State {
     fun init()
 }
 
-abstract class GameState(Name: String) : State {}
+abstract class GameState(val Name: String) : State {}

@@ -18,7 +18,7 @@ class Window(private var dimensions: Pair<Int, Int>) {
     }
 
     init {
-        projectionMatrix.identity().ortho(0f, dimensions.first.toFloat(), 0f, dimensions.second.toFloat(), -1f, 1f);
+        //projectionMatrix.identity().ortho(0f, dimensions.first.toFloat(), 0f, dimensions.second.toFloat(), -1f, 1f);
         init()
     }
 

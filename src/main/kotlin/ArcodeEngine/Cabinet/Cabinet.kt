@@ -21,6 +21,13 @@ class Cabinet(private var window: Window) : GameState("Arcade Cabinet") {
     }
 
     companion object {
+        val TEX1 = ArcodeEngine.registerAsset("tex1")
+        val TEX2 = ArcodeEngine.registerAsset("tex2")
+        val TEX3 = ArcodeEngine.registerAsset("tex3")
+        val TEX4 = ArcodeEngine.registerAsset("tex4")
+        val TEX5 = ArcodeEngine.registerAsset("tex5")
+        val TEX6 = ArcodeEngine.registerAsset("tex6")
+
         @JvmStatic
         lateinit var wind: Window
         @JvmStatic
@@ -59,6 +66,12 @@ class Cabinet(private var window: Window) : GameState("Arcade Cabinet") {
             r2xpos = 0.9f
             rectxspeed = -1f
             rectyspeed = -0.5f
+            println(TEX1)
+            println(TEX2)
+            println(TEX3)
+            println(TEX4)
+            println(TEX5)
+            println(TEX6)
         }
         if (ticks % 10 == 0)
         {

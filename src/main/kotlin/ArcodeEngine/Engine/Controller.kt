@@ -177,7 +177,7 @@ class Controller
                     }
                 }
             }
-            throw IllegalArgumentException("There are only 2 Joysticks connected!\nAttempted to read state of Joystick: $Joystick")
+            return state
         }
     }
 }
