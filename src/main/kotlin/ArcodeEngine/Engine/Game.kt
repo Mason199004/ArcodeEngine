@@ -1,9 +1,7 @@
 package ArcodeEngine.Engine
 
-interface State {
-    fun tick()
-    fun render()
-    fun init()
+abstract class GameState(val Name: String, var window: Window) {
+    abstract fun tick();
+    abstract fun render();
+    abstract fun init();
 }
-
-abstract class GameState(val Name: String) : State {}

@@ -10,7 +10,7 @@ class ArcodeEngine
     companion object
     {
         var Assets: MutableMap<Long, String> = mutableMapOf()
-        fun submitStateChangeRequest(request: StateRequest, state: State) {
+        fun submitStateChangeRequest(request: StateRequest, state: GameState) {
             when(request) {
                 StateRequest.QUIT_CURRENT -> StateManager.popState()
                 StateRequest.PUSH -> StateManager.pushState(state)

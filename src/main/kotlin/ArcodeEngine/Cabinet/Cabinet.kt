@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11.*
 
 // MASON PLS TEST THIS IN CLASS IDK IF IT ACTUALLY WORKS IT SHOULD JUST BE A RED SCREEN
 
-class Cabinet(private var window: Window) : GameState("Arcade Cabinet") {
+class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
 
 
 

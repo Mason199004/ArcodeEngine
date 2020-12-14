@@ -1,11 +1,13 @@
 package ArcodeEngine.Engine
 
+import org.lwjgl.glfw.GLFW
 import java.util.*
+import kotlin.system.exitProcess
 
 class StateManager {
     companion object {
-        private val states: Stack<State> = Stack()
-        private lateinit var currentState: State
+        private val states: Stack<GameState> = Stack()
+        private lateinit var currentState: GameState
 
         fun tickState() {
             var lastTime = System.nanoTime()
@@ -30,16 +32,21 @@ class StateManager {
                     println("FPS: $frames, Joystick2_State: ${Controller.getJoystickState(1)}")
                     frames = 0
                 }
+
+                if(GLFW.glfwWindowShouldClose(currentState.window.getWindowHandle())) {
+                    currentState.window.destroy()
+                    exitProcess(0)
+                }
             }
         }
 
-        fun pushState(state: State) {
+        fun pushState(state: GameState) {
             states.push(state)
             currentState = state
             currentState.init()
         }
 
-        fun popState(): State {
+        fun popState(): GameState {
             return states.pop()
         }
     }
