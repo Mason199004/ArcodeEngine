@@ -1,6 +1,7 @@
 package ArcodeEngine.Cabinet
 
 import ArcodeEngine.Engine.*
+import ArcodeEngine.Engine.GFX.Renderer
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
@@ -101,6 +102,8 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         glVertex2f(-0.025f + r2xpos, -0.2f + r2ypos)
         glVertex2f(0.025f + r2xpos, -0.2f + r2ypos)
         glVertex2f(0.025f + r2xpos, 0.2f + r2ypos)
+
+
 
         //ball
         glVertex2f(-0.025f + xpos, 0.025f + ypos)
