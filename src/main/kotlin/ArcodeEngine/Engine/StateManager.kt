@@ -1,5 +1,6 @@
 package ArcodeEngine.Engine
 
+import ArcodeEngine.Engine.GFX.Loader
 import org.lwjgl.glfw.GLFW
 import java.util.*
 import kotlin.system.exitProcess
@@ -35,6 +36,7 @@ class StateManager {
 
                 if(GLFW.glfwWindowShouldClose(currentState.window.GetWindowHandle())) {
                     currentState.window.destroy()
+                    Loader.CleanUp()
                     exitProcess(0)
                 }
             }

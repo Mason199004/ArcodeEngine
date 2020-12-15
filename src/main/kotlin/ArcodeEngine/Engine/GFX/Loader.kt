@@ -9,7 +9,6 @@ import java.nio.FloatBuffer
 import java.nio.IntBuffer
 import java.util.*
 
-
 object Loader {
     var vaos = ArrayList<Int>()
     var vbos = ArrayList<Int>()
