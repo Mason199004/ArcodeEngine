@@ -5,7 +5,14 @@ import org.joml.Matrix4f
 import org.joml.Vector2f
 import org.joml.Vector3f
 
+/**
+ * This is the base class for all 2-D primitives
+ * */
 open class Geometry(var position: Vector2f, var rotation: Float) {
+    /**
+     * @param direction The direction (UP, DOWN, LEFT, RIGHT) that you want to move in.
+     * @param distance The distance you want to move
+     * */
     fun Move(direction: Direction, distance: Float) {
         when(direction) {
             Direction.UP -> {
@@ -23,6 +30,10 @@ open class Geometry(var position: Vector2f, var rotation: Float) {
         }
     }
 
+    /**
+     * @param direction The direction (LEFT or RIGHT) in which you want to rotate.
+     * @param angle The angle, in degrees, that you want to rotate.
+     * */
     fun Rotate(direction: Direction, angle: Float) {
         when(direction) {
             Direction.LEFT -> {
@@ -35,6 +46,10 @@ open class Geometry(var position: Vector2f, var rotation: Float) {
         }
     }
 
+    /**
+     * This function calculates, and returns the transformation matrix of the shape.
+     * @return The shape's transformation matrix
+     * */
     fun GetTransformMatrix(): Matrix4f {
         return Matrix4f().identity()
                 .translate(position.x, position.y, 0f)
