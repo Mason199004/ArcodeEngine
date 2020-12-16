@@ -1,6 +1,6 @@
 package ArcodeEngine.Engine
 
-import java.util.jar.Attributes.Name
+import ArcodeEngine.Engine.GFX.Shader.Shader
 
 class ArcodeEngine
 {
@@ -9,6 +9,9 @@ class ArcodeEngine
 
     companion object
     {
+        lateinit var ColoredShader: Shader
+        lateinit var TexturedShader: Shader
+
         var Assets: MutableMap<Long, String> = mutableMapOf()
         fun SubmitStateChangeRequest(request: StateRequest, state: GameState) {
             when(request) {
@@ -18,7 +21,6 @@ class ArcodeEngine
         }
         fun RegisterAsset(Asset: String) : Long
         {
-
             var num: Long
             Assets[Assets.count().also { num = it.toLong() }.toLong()] =  Asset
             return num

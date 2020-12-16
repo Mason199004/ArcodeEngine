@@ -2,6 +2,7 @@ package ArcodeEngine.Cabinet
 
 import ArcodeEngine.Engine.*
 import ArcodeEngine.Engine.GFX.Renderer
+import ArcodeEngine.Engine.GFX.Shader.Shader
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
@@ -11,9 +12,6 @@ import org.lwjgl.opengl.GL11.*
 // MASON PLS TEST THIS IN CLASS IDK IF IT ACTUALLY WORKS IT SHOULD JUST BE A RED SCREEN
 
 class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
-
-
-
 
     init {
 
@@ -46,6 +44,9 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
 
     override fun Init() {
         GL.createCapabilities();
+
+        ArcodeEngine.ColoredShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredFrag.glsl")
+        ArcodeEngine.TexturedShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedFrag.glsl")
 
         glClearColor(1f, 0f, 0f, 0f)
         StateManager.TickState()

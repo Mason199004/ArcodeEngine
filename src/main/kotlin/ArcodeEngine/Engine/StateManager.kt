@@ -37,6 +37,8 @@ class StateManager {
                 if(GLFW.glfwWindowShouldClose(currentState.window.GetWindowHandle())) {
                     currentState.window.destroy()
                     Loader.CleanUp()
+                    ArcodeEngine.ColoredShader.cleanUp()
+                    ArcodeEngine.TexturedShader.cleanUp()
                     exitProcess(0)
                 }
             }
