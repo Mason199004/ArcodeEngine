@@ -8,7 +8,7 @@ import org.joml.Vector3f
 /**
  * This is the base class for all 2-D primitives
  * */
-open class Geometry(var position: Vector2f, var rotation: Float) {
+open class Geometry(var position: Vector2f, var rotation: Float, var scaleXY: Pair<Float, Float>) {
     /**
      * @param direction The direction (UP, DOWN, LEFT, RIGHT) that you want to move in.
      * @param distance The distance you want to move
@@ -54,6 +54,6 @@ open class Geometry(var position: Vector2f, var rotation: Float) {
         return Matrix4f().identity()
                 .translate(position.x, position.y, 0f)
                 .rotate(rotation, Vector3f(0f, 0f, 1f))
-                .scale(1f)
+                .scale(scaleXY.first, scaleXY.second, 1f)
     }
 }
