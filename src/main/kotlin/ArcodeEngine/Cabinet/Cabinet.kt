@@ -8,7 +8,7 @@ import ArcodeEngine.Engine.Util.Direction
 import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL
-import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL30
 
 // This is the main class responsible for browsing all the current games in the cabinet
 
@@ -19,9 +19,7 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
     lateinit var rectangle: Rectangle
 
     init {
-
         ArcodeEngine.SubmitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, this)
-
     }
 
     companion object {
@@ -32,12 +30,18 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         val TEX5 = ArcodeEngine.RegisterAsset("tex5")
         val TEX6 = ArcodeEngine.RegisterAsset("tex6")
 
+        var gameLibrary: ArrayList<GameState> = ArrayList()
+
         @JvmStatic
         lateinit var wind: Window
         @JvmStatic
-        fun getWindow() : Long
+        fun GetWindow() : Long
         {
             return wind.GetWindowHandle()
+        }
+
+        fun AddGame(game: GameState) {
+            gameLibrary.add(game);
         }
 
         @JvmStatic
@@ -55,7 +59,7 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
 
         rectangle = Rectangle(50f, 50f, 2f, 2f)
 
-        glClearColor(0f, 0f, 0f, 0f)
+        GL30.glClearColor(0f, 0f, 0f, 0f)
         StateManager.TickState()
     }
 
@@ -66,12 +70,11 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         if (ticks % 30 == 0)
         {
             rectangle.Move(Direction.RIGHT, 1f)
-            //rectangle.Rotate(Direction.LEFT, 10f)
         }
         ticks++
     }
     override fun Render() {
-        glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
+        GL30.glClear(GL30.GL_COLOR_BUFFER_BIT or GL30.GL_DEPTH_BUFFER_BIT)
 
         Renderer.DrawColoredRect(rectangle, Vector3f(1f, 0f, 1f))
 

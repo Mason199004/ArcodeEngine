@@ -121,10 +121,10 @@ class Controller
                 {
                     1 ->
                     {
-                        val w = GLFW.glfwGetKey(Cabinet.getWindow(), GLFW.GLFW_KEY_W)
-                        val a = GLFW.glfwGetKey(Cabinet.getWindow(), GLFW.GLFW_KEY_A)
-                        val s = GLFW.glfwGetKey(Cabinet.getWindow(), GLFW.GLFW_KEY_S)
-                        val d = GLFW.glfwGetKey(Cabinet.getWindow(), GLFW.GLFW_KEY_D)
+                        val w = GLFW.glfwGetKey(Cabinet.GetWindow(), GLFW.GLFW_KEY_W)
+                        val a = GLFW.glfwGetKey(Cabinet.GetWindow(), GLFW.GLFW_KEY_A)
+                        val s = GLFW.glfwGetKey(Cabinet.GetWindow(), GLFW.GLFW_KEY_S)
+                        val d = GLFW.glfwGetKey(Cabinet.GetWindow(), GLFW.GLFW_KEY_D)
                         var xAxis = 0
                         var yAxis = 0
                         if (w == GLFW.GLFW_PRESS)
@@ -147,10 +147,10 @@ class Controller
                     }
                     2 ->
                     {
-                        val w = GLFW.glfwGetKey(Cabinet.getWindow(), GLFW.GLFW_KEY_UP)
-                        val a = GLFW.glfwGetKey(Cabinet.getWindow(), GLFW.GLFW_KEY_LEFT)
-                        val s = GLFW.glfwGetKey(Cabinet.getWindow(), GLFW.GLFW_KEY_DOWN)
-                        val d = GLFW.glfwGetKey(Cabinet.getWindow(), GLFW.GLFW_KEY_RIGHT)
+                        val w = GLFW.glfwGetKey(Cabinet.GetWindow(), GLFW.GLFW_KEY_UP)
+                        val a = GLFW.glfwGetKey(Cabinet.GetWindow(), GLFW.GLFW_KEY_LEFT)
+                        val s = GLFW.glfwGetKey(Cabinet.GetWindow(), GLFW.GLFW_KEY_DOWN)
+                        val d = GLFW.glfwGetKey(Cabinet.GetWindow(), GLFW.GLFW_KEY_RIGHT)
                         var xAxis = 0
                         var yAxis = 0
                         if (w == GLFW.GLFW_PRESS)
