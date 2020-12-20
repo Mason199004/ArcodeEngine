@@ -52,7 +52,7 @@ open class Geometry(var position: Vector2f, var rotation: Float, var scaleXY: Pa
      * */
     fun GetTransformMatrix(): Matrix4f {
         return Matrix4f().identity()
-                .translate(position.x, position.y, 0f)
+                .translate((position.x / 50f) - 1, (position.y / 50f) - 1, 0f)
                 .rotate(rotation, Vector3f(0f, 0f, 1f))
                 .scale(scaleXY.first, scaleXY.second, 1f)
     }

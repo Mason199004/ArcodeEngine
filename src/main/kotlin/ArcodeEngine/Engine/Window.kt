@@ -3,22 +3,28 @@ package ArcodeEngine.Engine
 import org.joml.Matrix4f
 import org.lwjgl.glfw.*
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL11.glViewport
 import org.lwjgl.system.MemoryUtil
 import java.lang.IllegalStateException
 
-class Window(private var dimensions: Pair<Int, Int>) {
+class Window(var dimensions: Pair<Int, Int>) {
+    var resized: Boolean = false
 
     private var errorCallback: GLFWErrorCallback? = null
     private var keyCallback: GLFWKeyCallback? = null
+    private var resizeCallback: GLFWFramebufferSizeCallback? = null
 
     private var window: Long = 0
+
+    private var aspectRatio: Float = dimensions.first.toFloat() / dimensions.second;
+    private var cameraZoom: Float = 1f;
 
     companion object {
         lateinit var projectionMatrix: Matrix4f
     }
 
     init {
-        projectionMatrix = Matrix4f().identity().ortho(0f, dimensions.first.toFloat(), 0f, dimensions.second.toFloat(), -1f, 1f);
+        projectionMatrix = Matrix4f().identity().ortho((-aspectRatio * cameraZoom) * 10f, (aspectRatio * cameraZoom) * 10f, -cameraZoom * 10f, cameraZoom * 10f, -1f, 1f);
         init()
     }
 
@@ -58,6 +64,9 @@ class Window(private var dimensions: Pair<Int, Int>) {
 
             }
         })
+
+        resizeCallback = GLFW.glfwSetFramebufferSizeCallback(window
+        ) { _, width, height -> dimensions = Pair(width, height); resized = true }
 
         // Get the resolution of the primary monitor
         val vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor())

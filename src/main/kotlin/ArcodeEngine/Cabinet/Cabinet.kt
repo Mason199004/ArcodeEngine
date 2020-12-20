@@ -53,7 +53,7 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         ArcodeEngine.ColoredShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredFrag.glsl")
         ArcodeEngine.TexturedShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedFrag.glsl")
 
-        rectangle = Rectangle(1f, 1f, 1f, 1f)
+        rectangle = Rectangle(50f, 50f, 2f, 2f)
 
         glClearColor(0f, 0f, 0f, 0f)
         StateManager.TickState()
@@ -63,9 +63,10 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
 
     override fun Tick()
     {
-        if (ticks % 10 == 0)
+        if (ticks % 30 == 0)
         {
-            rectangle.Move(Direction.RIGHT, 0.02f)
+            rectangle.Move(Direction.RIGHT, 1f)
+            //rectangle.Rotate(Direction.LEFT, 10f)
         }
         ticks++
     }

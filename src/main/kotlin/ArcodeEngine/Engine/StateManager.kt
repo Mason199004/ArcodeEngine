@@ -2,6 +2,7 @@ package ArcodeEngine.Engine
 
 import ArcodeEngine.Engine.GFX.Loader
 import org.lwjgl.glfw.GLFW
+import org.lwjgl.opengl.GL30
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -23,6 +24,8 @@ class StateManager {
                 lastTime = now
                 while (delta >= 1) {
                     currentState.Tick()
+                    if(currentState.window.resized)
+                        GL30.glViewport(0, 0, currentState.window.dimensions.first, currentState.window.dimensions.second)
                     delta--
                 }
                 currentState.Tick()

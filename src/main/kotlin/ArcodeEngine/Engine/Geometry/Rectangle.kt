@@ -9,10 +9,10 @@ import org.joml.Vector2f
  * */
 class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vector2f(x, y), 0f, Pair(width, height)){
     private val vertices: FloatArray = floatArrayOf(
-            -0.5f, -0.5f, 0f,
-            0.5f, -0.5f, 0f,
-            0.5f, 0.5f, 0f,
-            -0.5f, 0.5f, 0f
+            0f, 0f, 0f,
+            1f, 0f, 0f,
+            1f, 1f, 0f,
+            0f, 1f, 0f
     )
 
     private val textureCoordinates: FloatArray = floatArrayOf(
