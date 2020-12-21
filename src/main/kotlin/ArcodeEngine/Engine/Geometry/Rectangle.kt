@@ -16,10 +16,10 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
     )
 
     private val textureCoordinates: FloatArray = floatArrayOf(
-            0f, 0f,
-            1f, 0f,
+            0f, 1f,
             1f, 1f,
-            0f, 1f
+            1f, 0f,
+            0f, 0f
     )
 
     private val indices: IntArray = intArrayOf(
