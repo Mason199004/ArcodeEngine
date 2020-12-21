@@ -1,29 +1,37 @@
 package ArcodeEngine.Engine
 
 import ArcodeEngine.Engine.GFX.Shader.Shader
+import ArcodeEngine.Engine.GFX.Texture
+import java.security.InvalidParameterException
 
 class ArcodeEngine
 {
-    var Games: MutableList<GameState> = mutableListOf()
-
-
     companion object
     {
         lateinit var ColoredShader: Shader
         lateinit var TexturedShader: Shader
 
-        var Assets: MutableMap<Long, String> = mutableMapOf()
+        var textures: HashMap<Int, Texture> = hashMapOf()
         fun SubmitStateChangeRequest(request: StateRequest, state: GameState) {
             when(request) {
-                StateRequest.QUIT_CURRENT -> StateManager.popState()
-                StateRequest.PUSH -> StateManager.pushState(state)
+                StateRequest.QUIT_CURRENT -> StateManager.PopState()
+                StateRequest.PUSH -> StateManager.PushState(state)
             }
         }
-        fun RegisterAsset(Asset: String) : Long
-        {
-            var num: Long
-            Assets[Assets.count().also { num = it.toLong() }.toLong()] =  Asset
-            return num
+        fun RegisterTexture(path: String): Int {
+            var texture: Texture = Texture(path)
+            var textureID = texture.textureID
+
+            textures[textureID] = texture
+
+            return textureID
+        }
+
+        fun GetTexture(textureID: Int): Texture {
+            if(textures.containsKey(textureID))
+                return textures[textureID]!!
+            else
+                throw InvalidParameterException("The texture with id: $textureID could not be found. Have you registered it?")
         }
     }
 

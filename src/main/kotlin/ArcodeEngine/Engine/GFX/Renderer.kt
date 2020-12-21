@@ -2,9 +2,10 @@ package ArcodeEngine.Engine.GFX
 
 import ArcodeEngine.Engine.ArcodeEngine
 import ArcodeEngine.Engine.Geometry.Rectangle
+import ArcodeEngine.Engine.Util.OpenGL
 import ArcodeEngine.Engine.Window
 import org.joml.*
-import org.lwjgl.opengl.GL30
+import org.lwjgl.opengl.GL46.*
 
 class Renderer {
     companion object {
@@ -17,12 +18,24 @@ class Renderer {
             ArcodeEngine.ColoredShader.start()
             ArcodeEngine.ColoredShader.loadVector3f("inColor", color)
             ArcodeEngine.ColoredShader.loadMatrix4f("mvpMatrix", rectangle.GetTransformMatrix().mul(Window.projectionMatrix))
-            GL30.glBindVertexArray(rectangle.mesh.vaoID);
-            GL30.glEnableVertexAttribArray(0);
-            GL30.glDrawElements(GL30.GL_TRIANGLES, rectangle.mesh.vertices.size, GL30.GL_UNSIGNED_INT, 0)
-            GL30.glDisableVertexAttribArray(0);
-            GL30.glBindVertexArray(0)
+            OpenGL.GLBindVertexArray(rectangle.mesh.vaoID);
+            OpenGL.GLEnableVertexAttribArray(0);
+            OpenGL.GLDrawElements(GL_TRIANGLES, rectangle.mesh.vertices.size, GL_UNSIGNED_INT, 0)
+            OpenGL.GLDisableVertexAttribArray(0);
+            OpenGL.GLBindVertexArray(0)
             ArcodeEngine.ColoredShader.stop()
+        }
+
+        fun DrawTexturedRect(rectangle: Rectangle, textureID: Int) {
+            ArcodeEngine.TexturedShader.start()
+            ArcodeEngine.TexturedShader.loadMatrix4f("mvpMatrix", rectangle.GetTransformMatrix().mul(Window.projectionMatrix))
+            OpenGL.GLBindVertexArray(rectangle.mesh.vaoID)
+            OpenGL.GLEnableVertexAttribArray(0)
+            OpenGL.GLEnableVertexAttribArray(1)
+            OpenGL.GLActiveTexture(textureID)
+            OpenGL.GLBindTexture(GL_TRIANGLES, textureID)
+            OpenGL.GLDisableVertexAttribArray(1)
+            OpenGL.GLDisableVertexAttribArray(0)
         }
     }
 }

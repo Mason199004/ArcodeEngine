@@ -3,7 +3,6 @@ package ArcodeEngine.Engine
 import org.joml.Matrix4f
 import org.lwjgl.glfw.*
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL11.glViewport
 import org.lwjgl.system.MemoryUtil
 import java.lang.IllegalStateException
 
@@ -25,10 +24,10 @@ class Window(var dimensions: Pair<Int, Int>) {
 
     init {
         projectionMatrix = Matrix4f().identity().ortho((-aspectRatio * cameraZoom) * 10f, (aspectRatio * cameraZoom) * 10f, -cameraZoom * 10f, cameraZoom * 10f, -1f, 1f);
-        init()
+        Init()
     }
 
-    private fun init() {
+    private fun Init() {
 
         // Setup an error callback. The default implementation
         // will print the error message in System.err.
@@ -45,7 +44,7 @@ class Window(var dimensions: Pair<Int, Int>) {
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE)
 
         // Create the window
-        window = GLFW.glfwCreateWindow(dimensions.first, dimensions.second, "Hello World!", MemoryUtil.NULL, MemoryUtil.NULL)
+        window = GLFW.glfwCreateWindow(dimensions.first, dimensions.second, "Arcode Engine", MemoryUtil.NULL, MemoryUtil.NULL)
         if (window == MemoryUtil.NULL) {
             throw RuntimeException("Failed to create the GLFW window")
         }
@@ -90,7 +89,7 @@ class Window(var dimensions: Pair<Int, Int>) {
         GLFW.glfwShowWindow(window)
     }
 
-    fun destroy() {
+    fun Destroy() {
         // Free the window callbacks and destroy the window
         Callbacks.glfwFreeCallbacks(window);
         GLFW.glfwDestroyWindow(window);

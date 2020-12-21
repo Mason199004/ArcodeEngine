@@ -1,14 +1,16 @@
 package ArcodeEngine.Engine.GFX.Shader
 
+import ArcodeEngine.Engine.Util.OpenGL
 import org.joml.Matrix4f
 import org.joml.Vector3f
 import org.lwjgl.BufferUtils
-import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL20
+import org.lwjgl.opengl.GL46
+import org.lwjgl.opengl.GL46.*
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
 import java.security.InvalidParameterException
+import kotlin.system.exitProcess
 
 
 class Shader(vertFile: String, fragFile: String) {
@@ -20,50 +22,50 @@ class Shader(vertFile: String, fragFile: String) {
     private var uniforms: HashMap<String, Int> = HashMap()
 
     fun start() {
-        GL20.glUseProgram(programID)
+        OpenGL.GLUseProgram(programID)
     }
 
     fun stop() {
-        GL20.glUseProgram(0)
+        OpenGL.GLUseProgram(0)
     }
 
     fun cleanUp() {
         stop()
-        GL20.glDetachShader(programID, vertexShaderID)
-        GL20.glDetachShader(programID, fragmentShaderID)
-        GL20.glDeleteShader(vertexShaderID)
-        GL20.glDeleteShader(fragmentShaderID)
-        GL20.glDeleteProgram(programID)
+        OpenGL.GLDetachShader(programID, vertexShaderID)
+        OpenGL.GLDetachShader(programID, fragmentShaderID)
+        OpenGL.GLDeleteShader(vertexShaderID)
+        OpenGL.GLDeleteShader(fragmentShaderID)
+        OpenGL.GLDeleteProgram(programID)
     }
 
-    fun bindAttribute(attribute: Int, variableName: String?) {
-        GL20.glBindAttribLocation(programID, attribute, variableName)
+    fun bindAttribute(attribute: Int, variableName: String) {
+        OpenGL.GLBindAttribLocation(programID, attribute, variableName)
     }
 
     fun loadFloat(uniformName: String, value: Float) {
         TryGetUniform(uniformName)
-        GL20.glUniform1f(uniforms[uniformName]!!, value)
+        OpenGL.GLUniform1f(uniforms[uniformName]!!, value)
     }
 
     fun loadVector3f(uniformName: String, vec: Vector3f) {
         TryGetUniform(uniformName)
-        GL20.glUniform3f(uniforms[uniformName]!!, vec.x, vec.y, vec.z)
+        OpenGL.GLUniform3f(uniforms[uniformName]!!, vec.x, vec.y, vec.z)
     }
 
     fun loadBoolean(uniformName: String, value: Int) {
         TryGetUniform(uniformName)
-        GL20.glUniform1i(uniforms[uniformName]!!, value)
+        OpenGL.GLUniform1i(uniforms[uniformName]!!, value)
     }
 
     fun loadMatrix4f(uniformName: String, mat: Matrix4f) {
         TryGetUniform(uniformName)
         mat[matBuffer]
         matBuffer.clear()
-        GL20.glUniformMatrix4fv(uniforms[uniformName]!!, false, matBuffer)
+        OpenGL.GLUniformMatrix4fv(uniforms[uniformName]!!, false, matBuffer)
     }
 
     private fun TryGetUniform(name: String) {
-        val location: Int = GL20.glGetUniformLocation(programID, name)
+        val location: Int = OpenGL.GLGetUniformLocation(programID, name)
         if(location == -1)
             throw InvalidParameterException("Could not find uniform variable: $name")
         else
@@ -83,27 +85,27 @@ class Shader(vertFile: String, fragFile: String) {
             } catch (e: IOException) {
                 System.err.println("Could not find file!")
                 e.printStackTrace()
-                System.exit(-1)
+                exitProcess(-1)
             }
-            val shaderID = GL20.glCreateShader(type)
-            GL20.glShaderSource(shaderID, shaderSource)
-            GL20.glCompileShader(shaderID)
-            if (GL20.glGetShaderi(shaderID, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE) {
-                println(GL20.glGetShaderInfoLog(shaderID, 500))
+            val shaderID = OpenGL.GLCreateShader(type)
+            OpenGL.GLShaderSource(shaderID, shaderSource)
+            OpenGL.GLCompileShader(shaderID)
+            if (OpenGL.GLGetShaderi(shaderID, GL_COMPILE_STATUS) == GL_FALSE) {
+                println(OpenGL.GLGetShaderInfoLog(shaderID, 500))
                 System.err.println("Could not compile shader!")
-                System.exit(-1)
+                exitProcess(-1)
             }
             return shaderID
         }
     }
 
     init {
-        vertexShaderID = loadShader(vertFile, GL20.GL_VERTEX_SHADER)
-        fragmentShaderID = loadShader(fragFile, GL20.GL_FRAGMENT_SHADER)
-        programID = GL20.glCreateProgram()
-        GL20.glAttachShader(programID, vertexShaderID)
-        GL20.glAttachShader(programID, fragmentShaderID)
-        GL20.glLinkProgram(programID)
-        GL20.glValidateProgram(programID)
+        vertexShaderID = loadShader(vertFile, GL_VERTEX_SHADER)
+        fragmentShaderID = loadShader(fragFile, GL_FRAGMENT_SHADER)
+        programID = OpenGL.GLCreateProgram()
+        OpenGL.GLAttachShader(programID, vertexShaderID)
+        OpenGL.GLAttachShader(programID, fragmentShaderID)
+        OpenGL.GLLinkProgram(programID)
+        OpenGL.GLValidateProgram(programID)
     }
 }

@@ -29,9 +29,6 @@ object Loader {
         for (vbo in vbos) {
             GL15.glDeleteBuffers(vbo)
         }
-        for (texture in textures) {
-            GL11.glDeleteTextures(texture)
-        }
     }
 
     fun CreateVAO(): Int {

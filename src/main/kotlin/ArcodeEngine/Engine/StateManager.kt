@@ -1,8 +1,8 @@
 package ArcodeEngine.Engine
 
 import ArcodeEngine.Engine.GFX.Loader
+import ArcodeEngine.Engine.Util.OpenGL
 import org.lwjgl.glfw.GLFW
-import org.lwjgl.opengl.GL30
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -25,7 +25,7 @@ class StateManager {
                 while (delta >= 1) {
                     currentState.Tick()
                     if(currentState.window.resized)
-                        GL30.glViewport(0, 0, currentState.window.dimensions.first, currentState.window.dimensions.second)
+                        OpenGL.GLViewport(0, 0, currentState.window.dimensions.first, currentState.window.dimensions.second)
                     delta--
                 }
                 currentState.Tick()
@@ -38,7 +38,7 @@ class StateManager {
                 }
 
                 if(GLFW.glfwWindowShouldClose(currentState.window.GetWindowHandle())) {
-                    currentState.window.destroy()
+                    currentState.window.Destroy()
                     Loader.CleanUp()
                     ArcodeEngine.ColoredShader.cleanUp()
                     ArcodeEngine.TexturedShader.cleanUp()
@@ -47,13 +47,13 @@ class StateManager {
             }
         }
 
-        fun pushState(state: GameState) {
+        fun PushState(state: GameState) {
             states.push(state)
             currentState = state
             currentState.Init()
         }
 
-        fun popState(): GameState {
+        fun PopState(): GameState {
             return states.pop()
         }
     }
