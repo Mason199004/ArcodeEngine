@@ -19,12 +19,10 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
 
     lateinit var rectangle: Rectangle
 
-    var missingTexture: Int
+    var missingTexture: Int = 0
 
     init {
         ArcodeEngine.SubmitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, this)
-
-        missingTexture = ArcodeEngine.RegisterTexture("src/main/kotlin/ArcodeEngine/Cabinet/res/missing.png")
     }
 
     companion object {
@@ -55,7 +53,9 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         ArcodeEngine.ColoredShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredFrag.glsl")
         ArcodeEngine.TexturedShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedFrag.glsl")
 
-        rectangle = Rectangle(0f, 0f, 2f, 2f)
+        missingTexture = ArcodeEngine.RegisterTexture("src/main/kotlin/ArcodeEngine/Cabinet/res/missing.png")
+
+        rectangle = Rectangle(50f, 50f, 2f, 2f)
 
         OpenGL.GLClearColor(0f, 0f, 0f, 0f)
         StateManager.TickState()
@@ -75,8 +75,8 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
     override fun Render() {
         OpenGL.GLClear(GL30.GL_COLOR_BUFFER_BIT or GL30.GL_DEPTH_BUFFER_BIT)
 
-        Renderer.DrawColoredRect(rectangle, Vector3f(0f, 1f, 1f))
-        //Renderer.DrawTexturedRect(rectangle, missingTexture)
+        //Renderer.DrawColoredRect(rectangle, Vector3f(0f, 1f, 1f))
+        Renderer.DrawTexturedRect(rectangle, missingTexture)
 
         GLFW.glfwSwapBuffers(window.GetWindowHandle())
 

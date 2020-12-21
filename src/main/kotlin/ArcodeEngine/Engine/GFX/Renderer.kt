@@ -32,10 +32,13 @@ class Renderer {
             OpenGL.GLBindVertexArray(rectangle.mesh.vaoID)
             OpenGL.GLEnableVertexAttribArray(0)
             OpenGL.GLEnableVertexAttribArray(1)
-            OpenGL.GLActiveTexture(textureID)
-            OpenGL.GLBindTexture(GL_TRIANGLES, textureID)
+            OpenGL.GLActiveTexture(GL_TEXTURE0)
+            OpenGL.GLBindTexture(GL_TEXTURE_2D, textureID)
+            OpenGL.GLDrawElements(GL_TRIANGLES, rectangle.mesh.vertices.size, GL_UNSIGNED_INT, 0)
             OpenGL.GLDisableVertexAttribArray(1)
             OpenGL.GLDisableVertexAttribArray(0)
+            OpenGL.GLBindVertexArray(0)
+            ArcodeEngine.TexturedShader.stop()
         }
     }
 }
