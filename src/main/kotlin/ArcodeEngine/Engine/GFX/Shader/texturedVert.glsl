@@ -5,10 +5,11 @@ in vec2 texCoords;
 
 out vec2 pass_Texture;
 
-uniform mat4 mvpMatrix;
+uniform mat4 mvMatrix;
+uniform mat4 projMatrix;
 
 void main(void) {
     // proj * view * model(transformation)
-    gl_Position = mvpMatrix * vec4(position, 1.0);
+    gl_Position = projMatrix * mvMatrix * vec4(position, 1.0);
     pass_Texture = texCoords;
 }

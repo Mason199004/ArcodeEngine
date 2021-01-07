@@ -1,6 +1,8 @@
 package ArcodeEngine.Engine.Util
 
 import org.lwjgl.opengl.GL
+import org.lwjgl.opengl.GL15
+import org.lwjgl.opengl.GL30
 import org.lwjgl.opengl.GL46.*
 import java.nio.FloatBuffer
 
@@ -30,6 +32,14 @@ class OpenGL {
             glBindTexture(target, texture)
         }
 
+        fun GLGenVertexArrays(): Int {
+            return glGenVertexArrays()
+        }
+
+        fun GLDeleteVertexArrays(array: Int) {
+            glDeleteVertexArrays(array)
+        }
+
         fun GLBindVertexArray(array: Int) {
             glBindVertexArray(array)
         }
@@ -44,6 +54,18 @@ class OpenGL {
 
         fun GLDisableVertexAttribArray(index: Int) {
             glDisableVertexAttribArray(index)
+        }
+
+        fun GLGenBuffers(): Int {
+            return glGenBuffers()
+        }
+
+        fun GLDeleteBuffers(buffer: Int) {
+            glDeleteBuffers(buffer)
+        }
+
+        fun GLBindBuffer(type: Int, buffer: Int) {
+            glBindBuffer(type, buffer)
         }
 
         fun GLBindAttribLocation(program: Int, index: Int, name: String) {

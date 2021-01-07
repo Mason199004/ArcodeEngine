@@ -14,21 +14,23 @@ class Renderer {
          * @param rectangle The rectangle you want to render
          *
          */
-        fun DrawColoredRect(rectangle: Rectangle, color: Vector3f) {
-            ArcodeEngine.ColoredShader.start()
-            ArcodeEngine.ColoredShader.loadVector3f("inColor", color)
-            ArcodeEngine.ColoredShader.loadMatrix4f("mvpMatrix", rectangle.GetTransformMatrix().mul(Window.projectionMatrix))
+        fun DrawColoredRect(window: Window, rectangle: Rectangle, color: Vector3f) {
+            ArcodeEngine.ColoredShader.Bind()
+            ArcodeEngine.ColoredShader.LoadVector3f("inColor", color)
+            ArcodeEngine.ColoredShader.LoadMatrix4f("mvMatrix", rectangle.GetTransformMatrix().mul(window.GetCamera().GetViewMatrix()))
+            ArcodeEngine.ColoredShader.LoadMatrix4f("projMatrix", window.GetCamera().GetProjectionMatrix())
             OpenGL.GLBindVertexArray(rectangle.mesh.vaoID);
             OpenGL.GLEnableVertexAttribArray(0);
             OpenGL.GLDrawElements(GL_TRIANGLES, rectangle.mesh.vertices.size, GL_UNSIGNED_INT, 0)
             OpenGL.GLDisableVertexAttribArray(0);
             OpenGL.GLBindVertexArray(0)
-            ArcodeEngine.ColoredShader.stop()
+            ArcodeEngine.ColoredShader.Unbind()
         }
 
-        fun DrawTexturedRect(rectangle: Rectangle, textureID: Int) {
-            ArcodeEngine.TexturedShader.start()
-            ArcodeEngine.TexturedShader.loadMatrix4f("mvpMatrix", rectangle.GetTransformMatrix().mul(Window.projectionMatrix))
+        fun DrawTexturedRect(window: Window, rectangle: Rectangle, textureID: Int) {
+            ArcodeEngine.TexturedShader.Bind()
+            ArcodeEngine.TexturedShader.LoadMatrix4f("mvMatrix", rectangle.GetTransformMatrix())
+            ArcodeEngine.TexturedShader.LoadMatrix4f("projMatrix", window.GetCamera().GetProjectionMatrix())
             OpenGL.GLBindVertexArray(rectangle.mesh.vaoID)
             OpenGL.GLEnableVertexAttribArray(0)
             OpenGL.GLEnableVertexAttribArray(1)
@@ -38,7 +40,7 @@ class Renderer {
             OpenGL.GLDisableVertexAttribArray(1)
             OpenGL.GLDisableVertexAttribArray(0)
             OpenGL.GLBindVertexArray(0)
-            ArcodeEngine.TexturedShader.stop()
+            ArcodeEngine.TexturedShader.Unbind()
         }
     }
 }

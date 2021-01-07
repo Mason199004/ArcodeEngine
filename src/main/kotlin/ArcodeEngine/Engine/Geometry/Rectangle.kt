@@ -9,10 +9,10 @@ import org.joml.Vector2f
  * */
 class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vector2f(x, y), 0f, Pair(width, height)){
     private val vertices: FloatArray = floatArrayOf(
-            -0.5f, -0.5f, 0f,
-            0.5f, -0.5f, 0f,
-            0.5f, 0.5f, 0f,
-            -0.5f, 0.5f, 0f
+            0f, 0f, 0f,
+            1f, 0f, 0f,
+            1f, 1f, 0f,
+            0f, 1f, 0f
     )
 
     private val textureCoordinates: FloatArray = floatArrayOf(
@@ -28,6 +28,21 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
 
     var mesh: Mesh
 
+    fun IsColliding(other: Rectangle): Boolean {
+        return (
+            (((this.position.x <= other.position.x) && (this.position.x + this.scaleXY.first >= other.position.x))
+            || ((this.position.x >= other.position.x) && (this.position.x <= other.position.x + other.scaleXY.first)))
+            &&
+            (((this.position.y <= other.position.y) && (this.position.y + this.scaleXY.second >= other.position.y))
+            || ((this.position.y >= other.position.y) && (this.position.y <= other.position.y + other.scaleXY.second)))
+        )
+    }
+    fun IsColliding(leftBound: Float, rightBound: Float, bottomBound: Float, topBound: Float): Boolean {
+        return (
+            (this.position.x <= leftBound || this.position.x + this.scaleXY.first >= rightBound
+            || this.position.y + scaleXY.second >= topBound || this.position.y <= bottomBound)
+        )
+    }
     init {
         mesh = Loader.LoadToVAO(vertices, textureCoordinates, indices)
     }

@@ -8,6 +8,8 @@ import java.lang.IllegalStateException
 
 class Window(var dimensions: Pair<Int, Int>) {
     var resized: Boolean = false
+    var maxWidth = 50f * (dimensions.first.toFloat() / dimensions.second.toFloat())
+    var maxHeight = 50f;
 
     private var errorCallback: GLFWErrorCallback? = null
     private var keyCallback: GLFWKeyCallback? = null
@@ -15,15 +17,13 @@ class Window(var dimensions: Pair<Int, Int>) {
 
     private var window: Long = 0
 
-    private var aspectRatio: Float = dimensions.first.toFloat() / dimensions.second;
-    private var cameraZoom: Float = 1f;
-
-    companion object {
-        lateinit var projectionMatrix: Matrix4f
-    }
+    private var camera: Camera
 
     init {
-        projectionMatrix = Matrix4f().identity().ortho((-aspectRatio * cameraZoom) * 10f, (aspectRatio * cameraZoom) * 10f, -cameraZoom * 10f, cameraZoom * 10f, -1f, 1f);
+        camera = Camera(
+            ProjectionMode.ORTHOGRAPHIC,
+            Pair(dimensions.first.toFloat(), dimensions.second.toFloat())
+        )
         Init()
     }
 
@@ -97,6 +97,14 @@ class Window(var dimensions: Pair<Int, Int>) {
         // Terminate GLFW and free the error callback
         GLFW.glfwTerminate();
         GLFW.glfwSetErrorCallback(null)?.free();
+    }
+
+    fun GetCamera(): Camera {
+        return camera
+    }
+
+    fun SetCamera(camera: Camera) {
+        this.camera = camera
     }
 
     fun GetWindowHandle(): Long {

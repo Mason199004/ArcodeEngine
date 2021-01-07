@@ -40,8 +40,8 @@ class StateManager {
                 if(GLFW.glfwWindowShouldClose(currentState.window.GetWindowHandle())) {
                     currentState.window.Destroy()
                     Loader.CleanUp()
-                    ArcodeEngine.ColoredShader.cleanUp()
-                    ArcodeEngine.TexturedShader.cleanUp()
+                    ArcodeEngine.ColoredShader.CleanUp()
+                    ArcodeEngine.TexturedShader.CleanUp()
                     exitProcess(0)
                 }
             }

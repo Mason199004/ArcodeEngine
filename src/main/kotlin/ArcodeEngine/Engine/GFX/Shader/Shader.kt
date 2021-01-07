@@ -4,7 +4,6 @@ import ArcodeEngine.Engine.Util.OpenGL
 import org.joml.Matrix4f
 import org.joml.Vector3f
 import org.lwjgl.BufferUtils
-import org.lwjgl.opengl.GL46
 import org.lwjgl.opengl.GL46.*
 import java.io.BufferedReader
 import java.io.FileReader
@@ -21,16 +20,16 @@ class Shader(vertFile: String, fragFile: String) {
 
     private var uniforms: HashMap<String, Int> = HashMap()
 
-    fun start() {
+    fun Bind() {
         OpenGL.GLUseProgram(programID)
     }
 
-    fun stop() {
+    fun Unbind() {
         OpenGL.GLUseProgram(0)
     }
 
-    fun cleanUp() {
-        stop()
+    fun CleanUp() {
+        Unbind()
         OpenGL.GLDetachShader(programID, vertexShaderID)
         OpenGL.GLDetachShader(programID, fragmentShaderID)
         OpenGL.GLDeleteShader(vertexShaderID)
@@ -38,26 +37,22 @@ class Shader(vertFile: String, fragFile: String) {
         OpenGL.GLDeleteProgram(programID)
     }
 
-    fun bindAttribute(attribute: Int, variableName: String) {
-        OpenGL.GLBindAttribLocation(programID, attribute, variableName)
-    }
-
-    fun loadFloat(uniformName: String, value: Float) {
+    fun LoadFloat(uniformName: String, value: Float) {
         TryGetUniform(uniformName)
         OpenGL.GLUniform1f(uniforms[uniformName]!!, value)
     }
 
-    fun loadVector3f(uniformName: String, vec: Vector3f) {
+    fun LoadVector3f(uniformName: String, vec: Vector3f) {
         TryGetUniform(uniformName)
         OpenGL.GLUniform3f(uniforms[uniformName]!!, vec.x, vec.y, vec.z)
     }
 
-    fun loadBoolean(uniformName: String, value: Int) {
+    fun LoadBoolean(uniformName: String, value: Int) {
         TryGetUniform(uniformName)
         OpenGL.GLUniform1i(uniforms[uniformName]!!, value)
     }
 
-    fun loadMatrix4f(uniformName: String, mat: Matrix4f) {
+    fun LoadMatrix4f(uniformName: String, mat: Matrix4f) {
         TryGetUniform(uniformName)
         mat[matBuffer]
         matBuffer.clear()
@@ -73,7 +68,7 @@ class Shader(vertFile: String, fragFile: String) {
     }
 
     companion object {
-        private fun loadShader(file: String, type: Int): Int {
+        private fun LoadShader(file: String, type: Int): Int {
             val shaderSource = StringBuilder()
             try {
                 val reader = BufferedReader(FileReader(file))
@@ -100,8 +95,8 @@ class Shader(vertFile: String, fragFile: String) {
     }
 
     init {
-        vertexShaderID = loadShader(vertFile, GL_VERTEX_SHADER)
-        fragmentShaderID = loadShader(fragFile, GL_FRAGMENT_SHADER)
+        vertexShaderID = LoadShader(vertFile, GL_VERTEX_SHADER)
+        fragmentShaderID = LoadShader(fragFile, GL_FRAGMENT_SHADER)
         programID = OpenGL.GLCreateProgram()
         OpenGL.GLAttachShader(programID, vertexShaderID)
         OpenGL.GLAttachShader(programID, fragmentShaderID)
