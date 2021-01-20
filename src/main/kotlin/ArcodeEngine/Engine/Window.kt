@@ -44,7 +44,7 @@ class Window(var dimensions: Pair<Int, Int>) {
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE)
 
         // Create the window
-        window = GLFW.glfwCreateWindow(dimensions.first, dimensions.second, "Arcode Engine", MemoryUtil.NULL, MemoryUtil.NULL)
+        window = GLFW.glfwCreateWindow(dimensions.first, dimensions.second, "Arcode Engine", GLFW.glfwGetPrimaryMonitor(), MemoryUtil.NULL)
         if (window == MemoryUtil.NULL) {
             throw RuntimeException("Failed to create the GLFW window")
         }

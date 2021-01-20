@@ -1,9 +1,9 @@
-#version 400 core
+#version 300 es 
 
-in vec3 position;
-in vec2 texCoords;
+in mediump vec3 position;
+in mediump vec2 texCoords;
 
-out vec2 pass_Texture;
+out mediump vec2 pass_Texture;
 
 uniform mat4 mvMatrix;
 uniform mat4 projMatrix;

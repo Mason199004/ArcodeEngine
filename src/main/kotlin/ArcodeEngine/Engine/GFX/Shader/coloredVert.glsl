@@ -1,8 +1,8 @@
-#version 400 core
+#version 300 es 
 
-in vec3 position;
+in mediump vec3 position;
 
-out vec3 color;
+out mediump vec3 color;
 
 uniform mat4 mvMatrix;
 uniform mat4 projMatrix;

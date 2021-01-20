@@ -1,9 +1,9 @@
-#version 400 core
+#version 300 es 
 
-in vec2 pass_Texture;
-in vec3 color;
+in mediump vec2 pass_Texture;
+in mediump vec3 color;
 
-out vec4 out_Color;
+out mediump vec4 out_Color;
 
 uniform sampler2D sampler;
 

@@ -1,8 +1,8 @@
-#version 400 core
+#version 300 es
 
-in vec3 color;
+in mediump vec3 color;
 
-out vec4 out_Color;
+out mediump vec4 out_Color;
 
 void main(void) {
     out_Color = vec4(color, 0);
