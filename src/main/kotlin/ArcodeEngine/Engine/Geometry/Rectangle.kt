@@ -15,7 +15,7 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
             0f, 1f, 0f
     )
 
-    private val textureCoordinates: FloatArray = floatArrayOf(
+    private var textureCoordinates: FloatArray = floatArrayOf(
             0f, 1f,
             1f, 1f,
             1f, 0f,
@@ -27,6 +27,10 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
     )
 
     var mesh: Mesh
+
+    constructor(x: Float, y: Float, width: Float, height: Float, texCoords: FloatArray) : this(x, y, width, height){
+        textureCoordinates = texCoords;
+    }
 
     fun IsColliding(other: Rectangle): Boolean {
         return (
