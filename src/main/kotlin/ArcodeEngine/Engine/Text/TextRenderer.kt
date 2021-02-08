@@ -16,11 +16,11 @@ class TextRenderer {
 
         }
 
-        private fun CalculateTextureCoords(char: Char) : FloatArray {
-            when(char) {
-                'A' -> {
+        private fun IsAlpha(c: Char) {}
+        private fun IsNumber(c: Char) {}
 
-                }
+        private fun CalculateTextureCoords(char: Char, idx: Int) : FloatArray {
+            when(char) {
                 else -> {
                     System.err.println("The character you entered: $char is not supported")
                     /* displays asterisk if an unsupported character is passed */
