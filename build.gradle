@@ -5,8 +5,8 @@ plugins {
     id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group 'org.dpisd'
+version '1.0'
 
     repositories {
         mavenCentral()
@@ -14,7 +14,7 @@ version '1.0-SNAPSHOT'
     }
 project.ext.lwjglVersion = "3.2.3"
 project.ext.jomlVersion = "1.9.25"
-project.ext.lwjglNatives = "natives-linux-arm32"
+project.ext.lwjglNatives = "natives-windows"
 
     dependencies {
         implementation "org.jetbrains.kotlin:kotlin-stdlib"
@@ -32,7 +32,7 @@ project.ext.lwjglNatives = "natives-linux-arm32"
         runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
         runtimeOnly "org.lwjgl:lwjgl-assimp::$lwjglNatives"
         runtimeOnly "org.lwjgl:lwjgl-glfw::$lwjglNatives"
-        //runtimeOnly "org.lwjgl:lwjgl-nfd::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-nfd::$lwjglNatives"
         runtimeOnly "org.lwjgl:lwjgl-openal::$lwjglNatives"
         runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
         runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
