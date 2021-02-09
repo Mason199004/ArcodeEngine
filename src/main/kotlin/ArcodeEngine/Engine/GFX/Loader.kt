@@ -42,21 +42,21 @@ object Loader {
         vbos.add(vboID)
         OpenGL.GLBindBuffer(GL_ARRAY_BUFFER, vboID) // START
         val buffer = StoreDataInFloatBuffer(data)
-        glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW)
-        glVertexAttribPointer(attribNumber, size, GL_FLOAT, false, 0, 0)
-        glBindBuffer(GL_ARRAY_BUFFER, 0) // END
+        OpenGL.GLBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW)
+        OpenGL.GLVertexAttribPointer(attribNumber, size, GL_FLOAT, false, 0, 0)
+        OpenGL.GLBindBuffer(GL_ARRAY_BUFFER, 0) // END
     }
 
     private fun UnbindVAO() {
-        GL30.glBindVertexArray(0)
+        OpenGL.GLBindVertexArray(0)
     }
 
     private fun BindIndicesBuffer(indices: IntArray) {
-        val vboID = glGenBuffers()
+        val vboID = OpenGL.GLGenBuffers()
         vbos.add(vboID)
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID)
+        OpenGL.GLBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID)
         val buffer = StoreDataInIntBuffer(indices)
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW)
+        OpenGL.GLBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW)
     }
 
     private fun StoreDataInIntBuffer(data: IntArray): IntBuffer {

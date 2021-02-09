@@ -2,9 +2,12 @@ package ArcodeEngine.Engine.Util
 
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL15
+import org.lwjgl.opengl.GL20
 import org.lwjgl.opengl.GL30
 import org.lwjgl.opengl.GL46.*
+import java.nio.ByteBuffer
 import java.nio.FloatBuffer
+import java.nio.IntBuffer
 
 class OpenGL {
     companion object {
@@ -68,8 +71,20 @@ class OpenGL {
             glBindBuffer(type, buffer)
         }
 
+        fun GLBufferData(target: Int, data: IntBuffer, usage: Int) {
+            glBufferData(target, data, usage)
+        }
+
+        fun GLBufferData(target: Int, data: FloatBuffer, usage: Int) {
+            glBufferData(target, data, usage)
+        }
+
         fun GLBindAttribLocation(program: Int, index: Int, name: String) {
             glBindAttribLocation(program, index, name)
+        }
+
+        fun GLVertexAttribPointer(index: Int, size: Int, type: Int, normalized: Boolean, stride: Int, pointer: Long) {
+            glVertexAttribPointer(index, size, type, normalized, stride, pointer)
         }
 
         fun GLDrawElements(mode: Int, count: Int, type: Int, indices: Long) {
