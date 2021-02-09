@@ -32,9 +32,9 @@ class TextRenderer {
             val isNumber: Int = IsNumber(char)
 
             val texCoords = if(isAlpha != -1)
-                CalculateTextureCoords(char, isAlpha)
+                CalculateTextureCoords('A', isAlpha)
             else if(isNumber != -1)
-                CalculateTextureCoords(char, isNumber)
+                CalculateTextureCoords('0', isNumber)
             else
                 CalculateTextureCoords(char, 0x420beef)
 
