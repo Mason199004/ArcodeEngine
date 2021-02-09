@@ -11,15 +11,16 @@ class TextRenderer {
         private var cursorPosition: Vector2f = Vector2f()
         private var chars: ArrayList<Rectangle> = ArrayList()
 
-        private val FONT_MAP_ID: Int = ArcodeEngine.RegisterTexture("res/arcade-font.png")
+        private val FONT_MAP_ID: Int = ArcodeEngine.RegisterTexture("src/main/kotlin/ArcodeEngine/Engine/res/arcade-font.png")
 
-        private const val NUMBER_OFFSET: Int = 16
+        private const val NUMBER_OFFSET: Int = 38
         private const val CHAR_WIDTH: Int = 2
         private const val CHAR_HEIGHT: Int = 3
 
         fun DrawString(window: Window, x: Float, y: Float, msg: String, textScale: Float) {
             for(c in msg)
                 DrawChar(window, x, y, c, textScale)
+            cursorPosition.set(0f)
         }
 
         fun DrawChar(window: Window, x: Float, y:Float, char: Char, textScale: Float) {
@@ -62,7 +63,7 @@ class TextRenderer {
 
             when(char) {
                 'A' -> {
-                    floatArrayOf(
+                    return floatArrayOf(
                         col/16f,   (1 - row/3f),
                         col+1/16f, (1 - row/3f),
                         col+1/16f, (1 - ((row + 1)/3f)),
@@ -73,23 +74,24 @@ class TextRenderer {
                     row = (idx+NUMBER_OFFSET) / 16
                     col = (idx+NUMBER_OFFSET) % 16
 
-                    floatArrayOf(
+                    return floatArrayOf(
                         col/16f,   (1 - row/3f),
                         col+1/16f, (1 - row/3f),
                         col+1/16f, (1 - ((row + 1)/3f)),
                         col/16f,   (1 - ((row + 1) / 3f))
                     )
                 }
+                else -> {
+                    System.err.println("The character you entered: $char is not supported")
+                    /* displays asterisk if an unsupported character is passed */
+                    return floatArrayOf(
+                        12f / 16, 2f / 3,
+                        13f / 16, 2f / 3,
+                        13f / 16, 1f / 3,
+                        12f / 16, 1f / 3
+                    )
+                }
             }
-
-            System.err.println("The character you entered: $char is not supported")
-            /* displays asterisk if an unsupported character is passed */
-            return floatArrayOf(
-                    12f / 16, 2f / 3,
-                    13f / 16, 2f / 3,
-                    13f / 16, 1f / 3,
-                    12f / 16, 1f / 3
-            )
         }
     }
 }

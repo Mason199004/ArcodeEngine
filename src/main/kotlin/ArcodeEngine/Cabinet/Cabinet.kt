@@ -4,6 +4,7 @@ import ArcodeEngine.Engine.*
 import ArcodeEngine.Engine.GFX.Renderer
 import ArcodeEngine.Engine.GFX.Shader.Shader
 import ArcodeEngine.Engine.Geometry.Rectangle
+import ArcodeEngine.Engine.Text.TextRenderer
 import ArcodeEngine.Engine.Util.Direction
 import ArcodeEngine.Engine.Util.OpenGL
 import org.joml.Vector2f
@@ -109,6 +110,8 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         Renderer.DrawColoredRect(window, leftPaddle, Vector3f(0f, 1f, 1f))
         Renderer.DrawColoredRect(window, rightPaddle, Vector3f(0f, 1f, 1f))
         Renderer.DrawColoredRect(window, ball, Vector3f(1f, 0f, 0f))
+
+        TextRenderer.DrawString(window, 10f, 10f, "LOL XD", 2f)
 
         GLFW.glfwSwapBuffers(window.GetWindowHandle())
 
