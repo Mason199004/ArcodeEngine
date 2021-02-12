@@ -9,4 +9,6 @@ uniform sampler2D sampler;
 
 void main(void) {
     out_Color = texture(sampler, pass_Texture);
+    if(out_Color.a == float(0))
+        discard;
 }

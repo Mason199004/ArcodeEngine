@@ -30,6 +30,7 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
 
     constructor(x: Float, y: Float, width: Float, height: Float, texCoords: FloatArray) : this(x, y, width, height){
         textureCoordinates = texCoords;
+        mesh = Loader.LoadToVAO(vertices, textureCoordinates, indices)
     }
 
     fun IsColliding(other: Rectangle): Boolean {

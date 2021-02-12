@@ -111,7 +111,7 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         Renderer.DrawColoredRect(window, rightPaddle, Vector3f(0f, 1f, 1f))
         Renderer.DrawColoredRect(window, ball, Vector3f(1f, 0f, 0f))
 
-        TextRenderer.DrawString(window, 10f, 10f, "LOL XD", 2f)
+        TextRenderer.DrawString(window, 10f, 10f, "WORKING", 2f)
 
         GLFW.glfwSwapBuffers(window.GetWindowHandle())
 

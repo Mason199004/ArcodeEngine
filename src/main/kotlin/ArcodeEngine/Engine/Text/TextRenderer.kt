@@ -64,10 +64,10 @@ class TextRenderer {
             when(char) {
                 'A' -> {
                     return floatArrayOf(
-                        col/16f,   (1 - row/3f),
-                        col+1/16f, (1 - row/3f),
-                        col+1/16f, (1 - ((row + 1)/3f)),
-                        col/16f,   (1 - ((row + 1) / 3f))
+                        col/16f,   ((row/3f) + 1/3f),
+                        col/16f + 1/16f, ((row/3f) + 1/3f),
+                        col/16f + 1/16f, (row/3f),
+                        col/16f,   (row/3f)
                     )
                 }
                 '0' -> {
@@ -75,10 +75,10 @@ class TextRenderer {
                     col = (idx+NUMBER_OFFSET) % 16
 
                     return floatArrayOf(
-                        col/16f,   (1 - row/3f),
-                        col+1/16f, (1 - row/3f),
-                        col+1/16f, (1 - ((row + 1)/3f)),
-                        col/16f,   (1 - ((row + 1) / 3f))
+                        col/16f,   ((row/3f) + 1/3f),
+                        col/16f + 1/16f, ((row/3f) + 1/3f),
+                        col/16f + 1/16f, (row/3f),
+                        col/16f,   (row/3f)
                     )
                 }
                 else -> {
