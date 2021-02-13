@@ -32,22 +32,22 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
         textureCoordinates = texCoords;
         mesh = Loader.LoadToVAO(vertices, textureCoordinates, indices)
     }
-
     fun IsColliding(other: Rectangle): Boolean {
         return (
-            (((this.position.x <= other.position.x) && (this.position.x + this.scaleXY.first >= other.position.x))
-            || ((this.position.x >= other.position.x) && (this.position.x <= other.position.x + other.scaleXY.first)))
-            &&
-            (((this.position.y <= other.position.y) && (this.position.y + this.scaleXY.second >= other.position.y))
-            || ((this.position.y >= other.position.y) && (this.position.y <= other.position.y + other.scaleXY.second)))
-        )
+                (((this.position.x <= other.position.x) && (this.position.x + this.scaleXY.first >= other.position.x))
+                        || ((this.position.x >= other.position.x) && (this.position.x <= other.position.x + other.scaleXY.first)))
+                        &&
+                        (((this.position.y <= other.position.y) && (this.position.y + this.scaleXY.second >= other.position.y))
+                                || ((this.position.y >= other.position.y) && (this.position.y <= other.position.y + other.scaleXY.second)))
+                )
     }
     fun IsColliding(leftBound: Float, rightBound: Float, bottomBound: Float, topBound: Float): Boolean {
         return (
-            (this.position.x <= leftBound || this.position.x + this.scaleXY.first >= rightBound
-            || this.position.y + scaleXY.second >= topBound || this.position.y <= bottomBound)
-        )
+                (this.position.x <= leftBound || this.position.x + this.scaleXY.first >= rightBound
+                        || this.position.y + scaleXY.second >= topBound || this.position.y <= bottomBound)
+                )
     }
+
     init {
         mesh = Loader.LoadToVAO(vertices, textureCoordinates, indices)
     }

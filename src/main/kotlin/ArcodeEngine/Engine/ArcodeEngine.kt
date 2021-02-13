@@ -27,6 +27,10 @@ class ArcodeEngine
             return textureID
         }
 
+        fun UnregisterAsset(ID: Int) {
+
+        }
+
         fun GetTexture(textureID: Int): Texture {
             if(textures.containsKey(textureID))
                 return textures[textureID]!!

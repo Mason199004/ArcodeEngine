@@ -4,7 +4,8 @@ import ArcodeEngine.Engine.*
 import ArcodeEngine.Engine.GFX.Renderer
 import ArcodeEngine.Engine.GFX.Shader.Shader
 import ArcodeEngine.Engine.Geometry.Rectangle
-import ArcodeEngine.Engine.Text.TextRenderer
+import ArcodeEngine.Engine.GFX.TextRenderer
+import ArcodeEngine.Engine.Geometry.Text
 import ArcodeEngine.Engine.Util.Direction
 import ArcodeEngine.Engine.Util.OpenGL
 import org.joml.Vector2f
@@ -17,6 +18,10 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
     lateinit var leftPaddle: Rectangle
     lateinit var rightPaddle: Rectangle
     lateinit var ball: Rectangle
+
+    lateinit var specialChars: Text
+    lateinit var numbers: Text
+    lateinit var alphas: Text
 
     private val ballHSpeed: Float = 0.2f
     private val ballVSpeed: Float = 0.1f
@@ -58,6 +63,10 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         rightPaddle = Rectangle(window.maxWidth - 3, 10f, 2f, 9f)
         ball = Rectangle(window.maxWidth / 2, window.maxHeight / 2, 2f, 2f)
 
+        specialChars = Text(10f, 10f, "!*#%()-+=.,?", 1f)
+        alphas = Text(10f, 15f, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 1f)
+        numbers = Text(10f, 20f, "1234567890", 1f)
+
         OpenGL.GLClearColor(0f, 0f, 0f, 0f)
         StateManager.TickState()
     }
@@ -76,28 +85,36 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         }
 
         if(leftPaddle.IsColliding(ball)) {
-            if(ball.position.y > leftPaddle.position.y + (leftPaddle.scaleXY.second * (2f / 3f))) {
-                ballVelocity.y = ballVSpeed
-                ballVelocity.x = ballHSpeed / 2
-            } else if(ball.position.y < leftPaddle.position.y + (leftPaddle.scaleXY.second / 3f)) {
-                ballVelocity.y = -ballVSpeed
-                ballVelocity.x = ballHSpeed / 2
-            } else {
-                ballVelocity.y = 0f
-                ballVelocity.x = ballHSpeed / 2
+            when {
+                ball.position.y > leftPaddle.position.y + (leftPaddle.scaleXY.second * (2f / 3f)) -> {
+                    ballVelocity.y = ballVSpeed
+                    ballVelocity.x = ballHSpeed / 2
+                }
+                ball.position.y < leftPaddle.position.y + (leftPaddle.scaleXY.second / 3f) -> {
+                    ballVelocity.y = -ballVSpeed
+                    ballVelocity.x = ballHSpeed / 2
+                }
+                else -> {
+                    ballVelocity.y = 0f
+                    ballVelocity.x = ballHSpeed / 2
+                }
             }
         }
 
         if(rightPaddle.IsColliding(ball)) {
-            if(ball.position.y > rightPaddle.position.y + (rightPaddle.scaleXY.second * (2f / 3f))) {
-                ballVelocity.y = ballVSpeed
-                ballVelocity.x = -ballHSpeed / 2
-            } else if(ball.position.y < rightPaddle.position.y + (rightPaddle.scaleXY.second / 3f)) {
-                ballVelocity.y = -ballVSpeed
-                ballVelocity.x = -ballHSpeed / 2
-            } else {
-                ballVelocity.y = 0f
-                ballVelocity.x = -ballHSpeed / 2
+            when {
+                ball.position.y > rightPaddle.position.y + (rightPaddle.scaleXY.second * (2f / 3f)) -> {
+                    ballVelocity.y = ballVSpeed
+                    ballVelocity.x = -ballHSpeed / 2
+                }
+                ball.position.y < rightPaddle.position.y + (rightPaddle.scaleXY.second / 3f) -> {
+                    ballVelocity.y = -ballVSpeed
+                    ballVelocity.x = -ballHSpeed / 2
+                }
+                else -> {
+                    ballVelocity.y = 0f
+                    ballVelocity.x = -ballHSpeed / 2
+                }
             }
         }
 
@@ -111,9 +128,9 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         Renderer.DrawColoredRect(window, rightPaddle, Vector3f(0f, 1f, 1f))
         Renderer.DrawColoredRect(window, ball, Vector3f(1f, 0f, 0f))
 
-        TextRenderer.DrawString(window, 10f, 10f, "!*#%()-+=.,?", 1f)
-        TextRenderer.DrawString(window, 10f, 15f, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 1f)
-        TextRenderer.DrawString(window, 10f, 20f, "1234567890", 1f)
+        TextRenderer.DrawString(window, specialChars)
+        TextRenderer.DrawString(window, alphas)
+        TextRenderer.DrawString(window, numbers)
 
         GLFW.glfwSwapBuffers(window.GetWindowHandle())
 
