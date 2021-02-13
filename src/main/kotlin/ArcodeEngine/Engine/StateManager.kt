@@ -3,6 +3,7 @@ package ArcodeEngine.Engine
 import ArcodeEngine.Engine.GFX.Loader
 import ArcodeEngine.Engine.Util.OpenGL
 import org.lwjgl.glfw.GLFW
+import org.lwjgl.opengl.GL46.*
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -29,7 +30,7 @@ class StateManager {
                     delta--
                 }
                 currentState.Tick()
-                currentState.Render()
+                Render(currentState::Render)
                 frames++
                 if (System.currentTimeMillis() - timer > 1000) {
                     timer += 1000
@@ -45,6 +46,13 @@ class StateManager {
                     exitProcess(0)
                 }
             }
+        }
+
+        private fun Render(render: () -> Unit) {
+            OpenGL.GLClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
+            render()
+            GLFW.glfwSwapBuffers(currentState.window.GetWindowHandle())
+            GLFW.glfwPollEvents()
         }
 
         fun PushState(state: GameState) {

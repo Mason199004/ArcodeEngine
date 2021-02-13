@@ -122,8 +122,6 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         ticks++
     }
     override fun Render() {
-        OpenGL.GLClear(GL30.GL_COLOR_BUFFER_BIT or GL30.GL_DEPTH_BUFFER_BIT)
-
         Renderer.DrawColoredRect(window, leftPaddle, Vector3f(0f, 1f, 1f))
         Renderer.DrawColoredRect(window, rightPaddle, Vector3f(0f, 1f, 1f))
         Renderer.DrawColoredRect(window, ball, Vector3f(1f, 0f, 0f))
@@ -131,9 +129,5 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
         TextRenderer.DrawString(window, specialChars)
         TextRenderer.DrawString(window, alphas)
         TextRenderer.DrawString(window, numbers)
-
-        GLFW.glfwSwapBuffers(window.GetWindowHandle())
-
-        GLFW.glfwPollEvents()
     }
 }
