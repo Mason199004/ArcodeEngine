@@ -112,6 +112,7 @@ class Controller
             throw RuntimeException("Joystick returned an invalid state!")
         }
 
+        @JvmStatic
         fun GetJoystickState(Joystick: Int) : JoyState
         {
             val state = GetJoyState(Joystick)
