@@ -8,7 +8,7 @@ import java.lang.IllegalStateException
 
 class Window(var dimensions: Pair<Int, Int>) {
     var resized: Boolean = false
-    var maxWidth = 50f * (dimensions.first.toFloat() / dimensions.second.toFloat())
+    private var maxWidth = 50f * (dimensions.first.toFloat() / dimensions.second.toFloat())
     var maxHeight = 50f;
 
     private var errorCallback: GLFWErrorCallback? = null
@@ -97,6 +97,14 @@ class Window(var dimensions: Pair<Int, Int>) {
         // Terminate GLFW and free the error callback
         GLFW.glfwTerminate();
         GLFW.glfwSetErrorCallback(null)?.free();
+    }
+
+    fun GetMaxWidth(): Float {
+        return maxWidth;
+    }
+
+    fun GetMaxHeight(): Float {
+        return maxHeight;
     }
 
     fun GetCamera(): Camera {
