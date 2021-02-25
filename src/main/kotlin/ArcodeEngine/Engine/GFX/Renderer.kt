@@ -14,6 +14,7 @@ class Renderer {
          * @param rectangle The rectangle you want to render
          *
          */
+        @JvmStatic
         fun DrawColoredRect(window: Window, rectangle: Rectangle, color: Vector3f) {
             ArcodeEngine.ColoredShader.Bind()
             ArcodeEngine.ColoredShader.LoadVector3f("inColor", color)
@@ -27,6 +28,7 @@ class Renderer {
             ArcodeEngine.ColoredShader.Unbind()
         }
 
+        @JvmStatic
         fun DrawTexturedRect(window: Window, rectangle: Rectangle, textureID: Int) {
             ArcodeEngine.TexturedShader.Bind()
             ArcodeEngine.TexturedShader.LoadMatrix4f("mvMatrix", rectangle.GetTransformMatrix())
