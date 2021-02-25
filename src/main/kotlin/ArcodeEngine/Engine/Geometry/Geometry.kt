@@ -60,4 +60,12 @@ open class Geometry(var position: Vector2f, var rotation: Float, var scaleXY: Pa
                 .rotate(rotation, Vector3f(0f, 0f, 1f))
                 .scale(scaleXY.first, scaleXY.second, 1f)
     }
+
+    fun GetPosition(): Vector2f {
+        return position;
+    }
+
+    fun GetScale(): Pair<Float, Float> {
+        return scaleXY;
+    }
 }
