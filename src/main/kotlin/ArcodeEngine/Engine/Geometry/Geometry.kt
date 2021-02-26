@@ -8,7 +8,7 @@ import org.joml.Vector3f
 /**
  * This is the base class for all 2-D primitives
  * */
-open class Geometry(var position: Vector2f, var rotation: Float, var scaleXY: Pair<Float, Float>) {
+open class Geometry(protected var position: Vector2f, private var rotation: Float, protected var scaleXY: Pair<Float, Float>) {
     /**
      * @param direction The direction (UP, DOWN, LEFT, RIGHT) that you want to move in.
      * @param distance The distance you want to move
@@ -61,11 +61,31 @@ open class Geometry(var position: Vector2f, var rotation: Float, var scaleXY: Pa
                 .scale(scaleXY.first, scaleXY.second, 1f)
     }
 
-    fun GetPosition(): Vector2f {
-        return position;
+    fun GetX(): Float {
+        return position.x
     }
 
-    fun GetScale(): Pair<Float, Float> {
-        return scaleXY;
+    fun SetX(value: Float) {
+        position.x = value
+    }
+
+    fun GetY(): Float {
+        return position.y
+    }
+
+    fun SetY(value: Float) {
+        position.y = value
+    }
+
+    fun GetRotation(): Float {
+        return rotation;
+    }
+
+    fun GetWidth(): Float {
+        return scaleXY.first
+    }
+
+    fun GetHeight(): Float {
+        return scaleXY.second
     }
 }
