@@ -34,7 +34,7 @@ class StateManager {
                 frames++
                 if (System.currentTimeMillis() - timer > 1000) {
                     timer += 1000
-                    println("FPS: $frames")
+                    println("\u001b[1;34mFPS: \u001B[1;32m$frames")
                     frames = 0
                 }
 
