@@ -34,7 +34,7 @@ class StateManager {
                 frames++
                 if (System.currentTimeMillis() - timer > 1000) {
                     timer += 1000
-                    println("FPS: $frames, Joystick2_State: ${Controller.GetJoystickState(1)}")
+                    println("FPS: $frames")
                     frames = 0
                 }
 
