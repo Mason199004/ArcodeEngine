@@ -206,4 +206,11 @@ class Text (private var x: Float, private var y: Float, private var msg: String,
             }
         }
     }
+
+    fun SetMsg(msg: String) {
+        this.msg = msg
+        cursorPosition.x = 0f
+        cursorPosition.y = 0f
+        Generate()
+    }
 }
