@@ -23,8 +23,8 @@ public class PongExample extends GameState {
     private int leftScore = 0;
     private int rightScore = 0;
 
-    private final float BALL_H_SPEED = 0.13f;
-    private final float BALL_V_SPEED = 0.1f;
+    private final float BALL_H_SPEED = 0.16f;
+    private final float BALL_V_SPEED = 0.14f;
     private final Vector2f ballVelocity = new Vector2f(BALL_H_SPEED, 0f);
 
     private int ticks = 0;
@@ -68,7 +68,7 @@ public class PongExample extends GameState {
                 ballVelocity.x = BALL_H_SPEED;
             }
 
-        } else if(ball.GetX() < leftPaddle.GetX() + leftPaddle.GetWidth()) {
+        } else if(ball.GetX() < leftPaddle.GetX() + leftPaddle.GetWidth() - 0.5f) {
             ball = new Rectangle(window.GetMaxWidth() / 2, window.GetMaxHeight() / 2, 2f, 2f);
             ballVelocity.x = BALL_H_SPEED;
             ballVelocity.y = 0f;
@@ -87,7 +87,7 @@ public class PongExample extends GameState {
                 ballVelocity.x = -BALL_H_SPEED;
             }
 
-        } else if(ball.GetX() + ball.GetWidth() > rightPaddle.GetX()) {
+        } else if(ball.GetX() + ball.GetWidth() > rightPaddle.GetX() + 0.5f) {
             ball = new Rectangle(window.GetMaxWidth() / 2, window.GetMaxHeight() / 2, 2f, 2f);
             ballVelocity.x = -BALL_H_SPEED;
             ballVelocity.y = 0f;
