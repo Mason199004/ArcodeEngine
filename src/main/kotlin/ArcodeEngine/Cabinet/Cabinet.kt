@@ -27,7 +27,7 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            wind = Window(Pair(720, 480))
+            wind = Window(Pair(960, 540))
             Cabinet(wind)
         }
     }
