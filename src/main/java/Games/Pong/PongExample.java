@@ -1,6 +1,7 @@
 package Games.Pong;
 
 import ArcodeEngine.Engine.Controller;
+import ArcodeEngine.Engine.Geometry.Text;
 import ArcodeEngine.Engine.Util.Direction;
 import org.joml.*;
 
@@ -15,6 +16,12 @@ public class PongExample extends GameState {
     private Rectangle leftPaddle = null;
     private Rectangle rightPaddle = null;
     private Rectangle ball = null;
+
+    private Text leftScoreText = null;
+    private Text rightScoreText = null;
+
+    private int leftScore = 0;
+    private int rightScore = 0;
 
     private final float BALL_H_SPEED = 0.13f;
     private final float BALL_V_SPEED = 0.1f;
@@ -32,6 +39,9 @@ public class PongExample extends GameState {
         leftPaddle = new Rectangle(1f, 10f, 2f, 9f);
         rightPaddle = new Rectangle(window.GetMaxWidth() - 3, 10f, 2f, 9f);
         ball = new Rectangle(window.GetMaxWidth() / 2, window.GetMaxHeight() / 2, 2f, 2f);
+
+        leftScoreText = new Text(0f, window.GetMaxHeight() - 6f, Integer.toString(leftScore), 2f);
+        rightScoreText = new Text(window.GetMaxWidth() - 8f, window.getMaxHeight() - 6f, Integer.toString(rightScore), 2f);
     }
 
     @Override
@@ -58,6 +68,11 @@ public class PongExample extends GameState {
                 ballVelocity.x = BALL_H_SPEED;
             }
 
+        } else if(ball.GetX() < leftPaddle.GetX() + leftPaddle.GetWidth()) {
+            ball = new Rectangle(window.GetMaxWidth() / 2, window.GetMaxHeight() / 2, 2f, 2f);
+            ballVelocity.x = BALL_H_SPEED;
+            ballVelocity.y = 0f;
+            rightScoreText.SetMsg(Integer.toString(++rightScore));
         }
 
         if(rightPaddle.IsColliding(ball)) {
@@ -72,6 +87,11 @@ public class PongExample extends GameState {
                 ballVelocity.x = -BALL_H_SPEED;
             }
 
+        } else if(ball.GetX() + ball.GetWidth() > rightPaddle.GetX()) {
+            ball = new Rectangle(window.GetMaxWidth() / 2, window.GetMaxHeight() / 2, 2f, 2f);
+            ballVelocity.x = -BALL_H_SPEED;
+            ballVelocity.y = 0f;
+            leftScoreText.SetMsg(Integer.toString(++leftScore));
         }
 
         if(leftPaddle.GetY() < 0) {
@@ -95,6 +115,9 @@ public class PongExample extends GameState {
         Renderer.DrawColoredRect(window, leftPaddle, new Vector3f(0f, 1f, 1f));
         Renderer.DrawColoredRect(window, rightPaddle, new Vector3f(0f, 1f, 1f));
         Renderer.DrawColoredRect(window, ball, new Vector3f(1f, 0f, 0f));
+
+        TextRenderer.DrawString(window, leftScoreText);
+        TextRenderer.DrawString(window, rightScoreText);
     }
 
 }
