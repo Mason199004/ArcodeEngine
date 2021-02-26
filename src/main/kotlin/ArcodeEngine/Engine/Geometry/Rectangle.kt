@@ -26,12 +26,13 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
             0, 1, 2, 2, 3, 0
     )
 
-    var mesh: Mesh
+    private var mesh: Mesh
 
     constructor(x: Float, y: Float, width: Float, height: Float, texCoords: FloatArray) : this(x, y, width, height){
         textureCoordinates = texCoords;
         mesh = Loader.LoadToVAO(vertices, textureCoordinates, indices)
     }
+
     fun IsColliding(other: Rectangle): Boolean {
         return (
                 (((this.position.x <= other.position.x) && (this.position.x + this.scaleXY.first >= other.position.x))
@@ -41,11 +42,16 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
                                 || ((this.position.y >= other.position.y) && (this.position.y <= other.position.y + other.scaleXY.second)))
                 )
     }
+
     fun IsColliding(leftBound: Float, rightBound: Float, bottomBound: Float, topBound: Float): Boolean {
         return (
                 (this.position.x <= leftBound || this.position.x + this.scaleXY.first >= rightBound
                         || this.position.y + scaleXY.second >= topBound || this.position.y <= bottomBound)
                 )
+    }
+
+    fun GetMesh(): Mesh {
+        return mesh
     }
 
     init {
