@@ -27,8 +27,12 @@ class ArcodeEngine
             return textureID
         }
 
-        fun UnregisterAsset(ID: Int) {
+        fun RegisterProjectTexture(state: GameState, fileName: String): Int {
+            val texture = Texture("res/${state.name}/$fileName")
+            val textureID = texture.textureID
 
+            textures[textureID] = texture
+            return textureID
         }
 
         fun GetTexture(textureID: Int): Texture {
