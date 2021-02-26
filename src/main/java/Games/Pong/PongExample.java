@@ -10,7 +10,7 @@ import ArcodeEngine.Engine.GameState;
 import ArcodeEngine.Engine.Geometry.Rectangle;
 
 public class PongExample extends GameState {
-    private Window window;
+    private final Window window;
 
     private Rectangle leftPaddle = null;
     private Rectangle rightPaddle = null;
@@ -47,10 +47,10 @@ public class PongExample extends GameState {
         }
 
         if(leftPaddle.IsColliding(ball)) {
-            if(ball.GetPosition().y > leftPaddle.GetPosition().y + (leftPaddle.GetScale().getSecond() * (2f / 3f))) {
+            if(ball.GetY() > leftPaddle.GetY() + (leftPaddle.GetHeight() * (2f / 3f))) {
                 ballVelocity.y = BALL_V_SPEED;
                 ballVelocity.x = BALL_H_SPEED / 2;
-            } else if(ball.GetPosition().y < leftPaddle.GetPosition().y + (leftPaddle.GetScale().getSecond() / 3f)) {
+            } else if(ball.GetY() < leftPaddle.GetY() + (leftPaddle.GetHeight() / 3f)) {
                 ballVelocity.y = -BALL_V_SPEED;
                 ballVelocity.x = BALL_H_SPEED / 2;
             } else {
@@ -61,10 +61,10 @@ public class PongExample extends GameState {
         }
 
         if(rightPaddle.IsColliding(ball)) {
-            if(ball.GetPosition().y > rightPaddle.GetPosition().y + (rightPaddle.GetScale().getSecond() * (2f / 3f))) {
+            if(ball.GetY() > rightPaddle.GetY() + (rightPaddle.GetHeight() * (2f / 3f))) {
                 ballVelocity.y = BALL_V_SPEED;
                 ballVelocity.x = -BALL_H_SPEED / 2;
-            } else if(ball.GetPosition().y < rightPaddle.GetPosition().y + (rightPaddle.GetScale().getSecond() / 3f)) {
+            } else if(ball.GetY() < rightPaddle.GetY() + (rightPaddle.GetHeight() / 3f)) {
                 ballVelocity.y = -BALL_V_SPEED;
                 ballVelocity.x = -BALL_H_SPEED / 2;
             } else {
@@ -72,6 +72,18 @@ public class PongExample extends GameState {
                 ballVelocity.x = -BALL_H_SPEED;
             }
 
+        }
+
+        if(leftPaddle.GetY() < 0) {
+            leftPaddle.SetY(0);
+        } else if((leftPaddle.GetY() + rightPaddle.GetHeight()) > window.GetMaxHeight()) {
+            leftPaddle.SetY(window.GetMaxHeight() - leftPaddle.GetHeight());
+        }
+
+        if(rightPaddle.GetY() < 0) {
+            rightPaddle.SetY(0);
+        } else if((rightPaddle.GetY() + rightPaddle.GetHeight()) > window.GetMaxHeight()) {
+            rightPaddle.SetY(window.GetMaxHeight() - rightPaddle.GetHeight());
         }
 
         ball.Move(ballVelocity);
