@@ -18,6 +18,8 @@ class ArcodeEngine
                 StateRequest.PUSH -> StateManager.PushState(state)
             }
         }
+
+        @JvmStatic
         fun RegisterTexture(path: String): Int {
             var texture: Texture = Texture(path)
             var textureID = texture.textureID
@@ -27,6 +29,7 @@ class ArcodeEngine
             return textureID
         }
 
+        @JvmStatic
         fun RegisterProjectTexture(state: GameState, fileName: String): Int {
             val texture = Texture("res/${state.name}/$fileName")
             val textureID = texture.textureID
@@ -35,6 +38,7 @@ class ArcodeEngine
             return textureID
         }
 
+        @JvmStatic
         fun GetTexture(textureID: Int): Texture {
             if(textures.containsKey(textureID))
                 return textures[textureID]!!
