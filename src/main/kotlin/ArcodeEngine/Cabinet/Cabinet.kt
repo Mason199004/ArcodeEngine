@@ -2,17 +2,24 @@ package ArcodeEngine.Cabinet
 
 import Games.Pong.PongExample
 import ArcodeEngine.Engine.*
+import ArcodeEngine.Engine.GFX.Renderer
 import ArcodeEngine.Engine.GFX.Shader.Shader
 import ArcodeEngine.Engine.GFX.TextRenderer
+import ArcodeEngine.Engine.Geometry.Rectangle
 import ArcodeEngine.Engine.Geometry.Text
 import ArcodeEngine.Engine.Util.OpenGL
 import java.util.ArrayList
 import kotlin.concurrent.timerTask
 
-class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
+class Cabinet(window: Window) : GameState("Cabinet", window) {
 
     private lateinit var gameTitleList: ArrayList<Text>
     private lateinit var menuTitle: Text
+
+    private lateinit var cursor: Rectangle
+
+    private var cursorTexture = 0
+    private var isNavigating = false
 
     private var cursorY = window.GetMaxHeight() - 8.5f
 
@@ -50,6 +57,9 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
 
         gameTitleList = arrayListOf()
 
+        cursorTexture = ArcodeEngine.RegisterProjectTexture(this, "arcade-cursor.png")
+
+        cursor = Rectangle(1.5f, window.GetMaxHeight() - 8.5f, 2f, 3f)
         menuTitle = Text(0.5f, window.GetMaxHeight() - 5f, "GAMES", 1.5f)
 
         /* ADD ALL NEW GAMES JUST AFTER THIS LINE SO YOU CAN RUN THEM */
@@ -63,8 +73,20 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
     }
 
     override fun Tick() {
-        // TODO: Make a cursor sprite
-        // TODO: Make the cursor a rectangle, not a text object
+
+        if(!isNavigating) {
+            if(Controller.GetJoystickState(1).GetY() > 0 && cursorY < window.GetMaxHeight() - 8.5f) {
+                cursorY += 4f
+                isNavigating = true
+            }
+            else if(Controller.GetJoystickState(1).GetY() < 0 && cursorY - 4f > 0f && cursorY >(window.GetMaxHeight() - (8.5f + (4f * (gameTitleList.size - 1))))) {
+                cursorY -= 4f
+                isNavigating = true
+            }
+        }
+        isNavigating = Controller.GetJoystickState(1).GetY() != 0
+
+        cursor.SetY(cursorY)
     }
 
     override fun Render() {
@@ -72,6 +94,8 @@ class Cabinet(window: Window) : GameState("Arcade Cabinet", window) {
 
         for(title in gameTitleList)
             TextRenderer.DrawString(window, title)
+
+        Renderer.DrawTexturedRect(window, cursor, cursorTexture)
     }
 
     fun GenerateGameList() {
