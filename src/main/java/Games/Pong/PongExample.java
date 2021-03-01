@@ -23,8 +23,8 @@ public class PongExample extends GameState {
     private int leftScore = 0;
     private int rightScore = 0;
 
-    private final float BALL_H_SPEED = 0.3f;
-    private final float BALL_V_SPEED = 0.2f;
+    private final float BALL_H_SPEED = 0.4f;
+    private final float BALL_V_SPEED = 0.3f;
     private final Vector2f ballVelocity = new Vector2f(BALL_H_SPEED, 0f);
 
     private int ticks = 0;
