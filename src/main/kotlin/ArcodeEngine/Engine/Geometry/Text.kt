@@ -9,10 +9,12 @@ class Text (private var x: Float, private var y: Float, private var msg: String,
         private const val CHAR_HEIGHT: Int = 3
     }
 
+    private var originalMessage = ""
     private var cursorPosition: Vector2f = Vector2f()
     lateinit var chars: Array<Rectangle>
 
     init {
+        originalMessage = msg
         Generate()
     }
 
@@ -207,6 +209,10 @@ class Text (private var x: Float, private var y: Float, private var msg: String,
                 )
             }
         }
+    }
+
+    fun GetMsg(): String {
+        return originalMessage
     }
 
     fun SetMsg(msg: String) {
