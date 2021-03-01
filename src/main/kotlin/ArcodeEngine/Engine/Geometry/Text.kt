@@ -17,6 +17,8 @@ class Text (private var x: Float, private var y: Float, private var msg: String,
     }
 
     private fun Generate() {
+        msg = msg.toUpperCase()
+
         chars = Array(msg.length - msg.filter{ c -> c == ' '}.length) { i ->
             Rectangle(0f, 0f, 0f, 0f, floatArrayOf())
         }
@@ -212,5 +214,10 @@ class Text (private var x: Float, private var y: Float, private var msg: String,
         cursorPosition.x = 0f
         cursorPosition.y = 0f
         Generate()
+    }
+
+    fun AddY(y: Float) {
+        for(c in chars)
+            c.SetY(c.GetY() + y)
     }
 }
