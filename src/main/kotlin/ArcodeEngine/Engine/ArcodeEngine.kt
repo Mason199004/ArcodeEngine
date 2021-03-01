@@ -10,6 +10,7 @@ class ArcodeEngine
     {
         lateinit var ColoredShader: Shader
         lateinit var TexturedShader: Shader
+        lateinit var GlyphShader: Shader
 
         var textures: HashMap<Int, Texture> = hashMapOf()
         fun SubmitStateChangeRequest(request: StateRequest, state: GameState) {
