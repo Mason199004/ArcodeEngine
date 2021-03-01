@@ -78,7 +78,7 @@ open class Geometry(protected var position: Vector2f, private var rotation: Floa
     }
 
     fun GetRotation(): Float {
-        return rotation;
+        return rotation
     }
 
     fun GetWidth(): Float {

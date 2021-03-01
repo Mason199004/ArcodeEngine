@@ -43,7 +43,7 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
         }
 
         fun AddGame(game: GameState) {
-            gameLibrary[game.name] = game;
+            gameLibrary[game.name] = game
         }
 
         @JvmStatic
@@ -54,7 +54,7 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
     }
 
     override fun Init() {
-        OpenGL.CreateCapabilities();
+        OpenGL.CreateCapabilities()
 
         ArcodeEngine.ColoredShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredFrag.glsl")
         ArcodeEngine.TexturedShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedFrag.glsl")

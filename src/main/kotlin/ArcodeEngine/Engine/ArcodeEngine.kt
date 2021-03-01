@@ -22,8 +22,8 @@ class ArcodeEngine
 
         @JvmStatic
         fun RegisterTexture(path: String): Int {
-            var texture: Texture = Texture(path)
-            var textureID = texture.textureID
+            val texture = Texture(path)
+            val textureID = texture.textureID
 
             textures[textureID] = texture
 

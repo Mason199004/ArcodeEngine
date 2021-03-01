@@ -88,7 +88,7 @@ class OpenGL {
         }
 
         fun GLDrawElements(mode: Int, count: Int, type: Int, indices: Long) {
-            glDrawElements(mode, count, type, indices);
+            glDrawElements(mode, count, type, indices)
         }
 
         fun GLCreateProgram(): Int {
