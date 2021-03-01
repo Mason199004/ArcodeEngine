@@ -2,14 +2,14 @@ package ArcodeEngine.Cabinet
 
 import Games.Pong.PongExample
 import ArcodeEngine.Engine.*
-import ArcodeEngine.Engine.GFX.Renderer
 import ArcodeEngine.Engine.GFX.Shader.Shader
 import ArcodeEngine.Engine.GFX.TextRenderer
 import ArcodeEngine.Engine.Geometry.Rectangle
 import ArcodeEngine.Engine.Geometry.Text
 import ArcodeEngine.Engine.Util.OpenGL
+import org.joml.Vector3f
+import org.lwjgl.glfw.GLFW
 import java.util.ArrayList
-import kotlin.concurrent.timerTask
 
 class Cabinet(window: Window) : GameState("Cabinet", window) {
 
@@ -18,7 +18,11 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
 
     private lateinit var cursor: Rectangle
 
+    private val ACCENT_COLOR = Vector3f(0f, 1f, 1f)
+
     private var cursorTexture = 0
+    private var highlightIndex = 0
+
     private var isNavigating = false
 
     private var cursorY = window.GetMaxHeight() - 8.5f
@@ -44,7 +48,7 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            wind = Window(Pair(960, 540))
+            wind = Window(Pair(960, 540), true)
             Cabinet(wind)
         }
     }
@@ -54,6 +58,7 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
 
         ArcodeEngine.ColoredShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredFrag.glsl")
         ArcodeEngine.TexturedShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedFrag.glsl")
+        ArcodeEngine.GlyphShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/glyphVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/glyphFrag.glsl")
 
         gameTitleList = arrayListOf()
 
@@ -68,43 +73,50 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
         OpenGL.GLClearColor(0f, 0f, 0f, 0f)
 
         GenerateGameList()
-
-        ArcodeEngine.SubmitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, gameLibrary.get("Pong")!!)
-
         StateManager.TickState()
     }
 
     override fun Tick() {
 
         if(!isNavigating) {
-            if(Controller.GetJoystickState(1).GetY() > 0 && cursorY < window.GetMaxHeight() - 8.5f) {
+            if(Controller.GetJoystickState(2).GetY() > 0 && cursorY < window.GetMaxHeight() - 8.5f) {
                 cursorY += 4f
                 isNavigating = true
+                highlightIndex--
             }
-            else if(Controller.GetJoystickState(1).GetY() < 0 && cursorY - 4f > 0f && cursorY >(window.GetMaxHeight() - (8.5f + (4f * (gameTitleList.size - 1))))) {
+            else if(Controller.GetJoystickState(2).GetY() < 0 && cursorY - 4f > 0f && cursorY >(window.GetMaxHeight() - (8.5f + (4f * (gameTitleList.size - 1))))) {
                 cursorY -= 4f
                 isNavigating = true
+                highlightIndex++
             }
         }
-        isNavigating = Controller.GetJoystickState(1).GetY() != 0
+        isNavigating = Controller.GetJoystickState(2).GetY() != 0
+
+        val select = GLFW.glfwGetKey(window.GetWindowHandle(), GLFW.GLFW_KEY_ENTER)
+        if(select == GLFW.GLFW_PRESS)
+            SelectHighlitedElement()
 
         cursor.SetY(cursorY)
     }
 
     override fun Render() {
-        TextRenderer.DrawString(window, menuTitle)
+        TextRenderer.DrawString(window, menuTitle, ACCENT_COLOR)
 
         for(title in gameTitleList)
             TextRenderer.DrawString(window, title)
 
-        Renderer.DrawTexturedRect(window, cursor, cursorTexture)
+        TextRenderer.DrawGlyph(window, cursor, ACCENT_COLOR, cursorTexture)
     }
 
-    fun GenerateGameList() {
+    private fun GenerateGameList() {
         if(gameLibrary.isNotEmpty()) {
             for ((idx, title) in gameLibrary.keys.withIndex()) {
                 gameTitleList.add(Text(4.5f, (window.GetMaxHeight() - 8.5f) - (4f * idx), title, 1f))
             }
         }
+    }
+
+    private fun SelectHighlitedElement() {
+        ArcodeEngine.SubmitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, gameLibrary[gameTitleList[highlightIndex].GetMsg()]!!)
     }
 }
