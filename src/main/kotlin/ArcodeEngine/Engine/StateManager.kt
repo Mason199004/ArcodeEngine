@@ -29,7 +29,7 @@ class StateManager {
                         OpenGL.GLViewport(0, 0, currentState.window.dimensions.first, currentState.window.dimensions.second)
                     delta--
                 }
-                currentState.Tick()
+                //currentState.Tick()
                 Render(currentState::Render)
                 frames++
                 if (System.currentTimeMillis() - timer > 1000) {

@@ -83,7 +83,7 @@ class Window(var dimensions: Pair<Int, Int>) {
         GLFW.glfwMakeContextCurrent(window)
 
         // Enable v-sync (Change to 0/GLFW_FALSE to turn it off)
-        GLFW.glfwSwapInterval(GLFW.GLFW_TRUE)
+        GLFW.glfwSwapInterval(GLFW.GLFW_FALSE)
 
         // Make the window visible
         GLFW.glfwShowWindow(window)

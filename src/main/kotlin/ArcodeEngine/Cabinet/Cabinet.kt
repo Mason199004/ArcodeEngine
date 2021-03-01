@@ -69,6 +69,8 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
 
         GenerateGameList()
 
+        ArcodeEngine.SubmitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, gameLibrary.get("Pong")!!)
+
         StateManager.TickState()
     }
 
