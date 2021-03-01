@@ -29,12 +29,12 @@ class StateManager {
                         OpenGL.GLViewport(0, 0, currentState.window.dimensions.first, currentState.window.dimensions.second)
                     delta--
                 }
-                //currentState.Tick()
+
                 Render(currentState::Render)
                 frames++
                 if (System.currentTimeMillis() - timer > 1000) {
                     timer += 1000
-                    println("\u001b[1;34mFPS: \u001B[1;32m$frames")
+                    println("\u001b[1;34mFPS: \u001b[1;32m$frames\u001b[0;0m")
                     frames = 0
                 }
 
