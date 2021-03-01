@@ -6,7 +6,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.system.MemoryUtil
 import java.lang.IllegalStateException
 
-class Window(var dimensions: Pair<Int, Int>) {
+class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
     var resized: Boolean = false
     private var maxWidth = 50f * (dimensions.first.toFloat() / dimensions.second.toFloat())
     var maxHeight = 50f;
@@ -44,7 +44,10 @@ class Window(var dimensions: Pair<Int, Int>) {
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE)
 
         // Create the window
-        window = GLFW.glfwCreateWindow(dimensions.first, dimensions.second, "Arcode Engine", MemoryUtil.NULL, MemoryUtil.NULL)
+        if(fullscreen)
+            window = GLFW.glfwCreateWindow(1920, 1080, "Arcode Engine", GLFW.glfwGetPrimaryMonitor(), MemoryUtil.NULL)
+        else
+            window = GLFW.glfwCreateWindow(dimensions.first, dimensions.second, "Arcode Engine", MemoryUtil.NULL, MemoryUtil.NULL)
         if (window == MemoryUtil.NULL) {
             throw RuntimeException("Failed to create the GLFW window")
         }
@@ -83,7 +86,7 @@ class Window(var dimensions: Pair<Int, Int>) {
         GLFW.glfwMakeContextCurrent(window)
 
         // Enable v-sync (Change to 0/GLFW_FALSE to turn it off)
-        GLFW.glfwSwapInterval(GLFW.GLFW_FALSE)
+        GLFW.glfwSwapInterval(GLFW.GLFW_TRUE)
 
         // Make the window visible
         GLFW.glfwShowWindow(window)
