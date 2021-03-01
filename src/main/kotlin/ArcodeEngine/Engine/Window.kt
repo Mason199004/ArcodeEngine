@@ -1,15 +1,14 @@
 package ArcodeEngine.Engine
 
-import org.joml.Matrix4f
 import org.lwjgl.glfw.*
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFW
 import org.lwjgl.system.MemoryUtil
 import java.lang.IllegalStateException
 
 class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
     var resized: Boolean = false
     private var maxWidth = 50f * (dimensions.first.toFloat() / dimensions.second.toFloat())
-    var maxHeight = 50f;
+    var maxHeight = 50f
 
     private var errorCallback: GLFWErrorCallback? = null
     private var keyCallback: GLFWKeyCallback? = null
@@ -80,7 +79,7 @@ class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
                     (vidmode.width() - dimensions.first) / 2,
                     (vidmode.height() - dimensions.second) / 2
             )
-        };
+        }
 
         // Make the OpenGL context current
         GLFW.glfwMakeContextCurrent(window)
@@ -94,20 +93,20 @@ class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
 
     fun Destroy() {
         // Free the window callbacks and destroy the window
-        Callbacks.glfwFreeCallbacks(window);
-        GLFW.glfwDestroyWindow(window);
+        Callbacks.glfwFreeCallbacks(window)
+        GLFW.glfwDestroyWindow(window)
 
         // Terminate GLFW and free the error callback
-        GLFW.glfwTerminate();
-        GLFW.glfwSetErrorCallback(null)?.free();
+        GLFW.glfwTerminate()
+        GLFW.glfwSetErrorCallback(null)?.free()
     }
 
     fun GetMaxWidth(): Float {
-        return maxWidth;
+        return maxWidth
     }
 
     fun GetMaxHeight(): Float {
-        return maxHeight;
+        return maxHeight
     }
 
     fun GetCamera(): Camera {
