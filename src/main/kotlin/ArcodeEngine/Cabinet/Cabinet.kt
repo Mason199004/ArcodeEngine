@@ -28,7 +28,7 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
     private var cursorY = window.GetMaxHeight() - 8.5f
 
     init {
-        ArcodeEngine.SubmitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, this)
+        StateManager.PushState(this)
     }
 
     companion object {
@@ -48,7 +48,7 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            wind = Window(Pair(960, 540), true)
+            wind = Window(Pair(960, 540), false)
             Cabinet(wind)
         }
     }
@@ -77,6 +77,9 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
     }
 
     override fun Tick() {
+        val esc = GLFW.glfwGetKey(window.GetWindowHandle(), GLFW.GLFW_KEY_ESCAPE)
+        if(esc == GLFW.GLFW_PRESS)
+            GLFW.glfwSetWindowShouldClose(window.GetWindowHandle(), true)
 
         if(!isNavigating) {
             if(Controller.GetJoystickState(2).GetY() > 0 && cursorY < window.GetMaxHeight() - 8.5f) {
@@ -117,6 +120,6 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
     }
 
     private fun SelectHighlitedElement() {
-        ArcodeEngine.SubmitStateChangeRequest(ArcodeEngine.StateRequest.PUSH, gameLibrary[gameTitleList[highlightIndex].GetMsg()]!!)
+        StateManager.PushState(gameLibrary[gameTitleList[highlightIndex].GetMsg()]!!)
     }
 }
