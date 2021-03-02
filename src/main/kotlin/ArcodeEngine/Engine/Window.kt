@@ -59,10 +59,6 @@ class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
                                 action: Int,
                                 mods: Int) {
 
-                if (key == GLFW.GLFW_KEY_ESCAPE && action == GLFW.GLFW_RELEASE) {
-                    GLFW.glfwSetWindowShouldClose(window, true)
-                }
-
             }
         })
 
