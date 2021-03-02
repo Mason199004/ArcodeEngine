@@ -55,14 +55,17 @@ class StateManager {
             GLFW.glfwPollEvents()
         }
 
+        @JvmStatic
         fun PushState(state: GameState) {
             states.push(state)
             currentState = state
             currentState.Init()
         }
 
-        fun PopState(): GameState {
-            return states.pop()
+        @JvmStatic
+        fun PopState() {
+            states.pop()
+            currentState = states.peek()
         }
     }
 }
