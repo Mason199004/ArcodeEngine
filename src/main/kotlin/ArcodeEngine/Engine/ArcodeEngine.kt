@@ -13,12 +13,6 @@ class ArcodeEngine
         lateinit var GlyphShader: Shader
 
         var textures: HashMap<Int, Texture> = hashMapOf()
-        fun SubmitStateChangeRequest(request: StateRequest, state: GameState) {
-            when(request) {
-                StateRequest.QUIT_CURRENT -> StateManager.PopState()
-                StateRequest.PUSH -> StateManager.PushState(state)
-            }
-        }
 
         @JvmStatic
         fun RegisterTexture(path: String): Int {
@@ -47,10 +41,4 @@ class ArcodeEngine
                 throw InvalidParameterException("The texture with id: $textureID could not be found. Have you registered it?")
         }
     }
-
-    enum class StateRequest {
-        QUIT_CURRENT,
-        PUSH
-    }
-
 }
