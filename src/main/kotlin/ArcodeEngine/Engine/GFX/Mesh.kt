@@ -10,8 +10,6 @@ import javax.imageio.ImageIO
 
 open class Mesh(var vaoID: Int, var vertices: FloatArray, var textureCoordinates: FloatArray, var indices: IntArray) {}
 
-class TexturedMesh(var texture: Texture, vaoID: Int, vertices: FloatArray, textureCoordinates: FloatArray, indices: IntArray) : Mesh(vaoID, vertices, textureCoordinates, indices) {}
-
 class Texture(var path: String) {
     var width: Int = 0
     var height: Int = 0

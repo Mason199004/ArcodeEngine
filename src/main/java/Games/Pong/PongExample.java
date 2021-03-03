@@ -114,9 +114,9 @@ public class PongExample extends GameState {
 
     @Override
     public void Render() {
-        Renderer.DrawColoredRect(window, leftPaddle, new Vector3f(0f, 1f, 1f));
-        Renderer.DrawColoredRect(window, rightPaddle, new Vector3f(0f, 1f, 1f));
-        Renderer.DrawColoredRect(window, ball, new Vector3f(1f, 0f, 0f));
+        Renderer.DrawColoredRectRGB(window, leftPaddle, new Vector3f(0f, 1f, 1f));
+        Renderer.DrawColoredRectRGB(window, rightPaddle, new Vector3f(0f, 1f, 1f));
+        Renderer.DrawColoredRectRGB(window, ball, new Vector3f(1f, 0f, 0f));
 
         TextRenderer.DrawString(window, leftScoreText);
         TextRenderer.DrawString(window, rightScoreText);
