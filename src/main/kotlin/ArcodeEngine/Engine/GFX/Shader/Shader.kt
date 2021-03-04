@@ -3,6 +3,7 @@ package ArcodeEngine.Engine.GFX.Shader
 import ArcodeEngine.Engine.Util.OpenGL
 import org.joml.Matrix4f
 import org.joml.Vector3f
+import org.joml.Vector4f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL46.*
 import java.io.BufferedReader
@@ -45,6 +46,11 @@ class Shader(vertFile: String, fragFile: String) {
     fun LoadVector3f(uniformName: String, vec: Vector3f) {
         TryGetUniform(uniformName)
         OpenGL.GLUniform3f(uniforms[uniformName]!!, vec.x, vec.y, vec.z)
+    }
+
+    fun LoadVector4f(uniformName: String, vec: Vector4f) {
+        TryGetUniform(uniformName)
+        OpenGL.GLUniform4f(uniforms[uniformName]!!, vec.x, vec.y, vec.z, vec.w)
     }
 
     fun LoadBoolean(uniformName: String, value: Int) {

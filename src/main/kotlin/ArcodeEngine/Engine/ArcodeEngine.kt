@@ -8,12 +8,18 @@ class ArcodeEngine
 {
     companion object
     {
-        lateinit var ColoredShader: Shader
+        lateinit var ColoredShaderRGB: Shader
+        lateinit var ColoredShaderRGBA: Shader
         lateinit var TexturedShader: Shader
         lateinit var GlyphShader: Shader
 
         var textures: HashMap<Int, Texture> = hashMapOf()
 
+        /**
+         * Load a texture
+         * @param path The absolute path to the texture
+         * @return The ID of the texture
+         */
         @JvmStatic
         fun RegisterTexture(path: String): Int {
             val texture = Texture(path)
@@ -24,6 +30,11 @@ class ArcodeEngine
             return textureID
         }
 
+        /**
+         * Load a texture for the specified GameState
+         * @param state The GameState you want to register the texture for
+         * @param fileName The file name of the texture. NOT THE PATH
+         */
         @JvmStatic
         fun RegisterProjectTexture(state: GameState, fileName: String): Int {
             val texture = Texture("res/${state.name}/$fileName")

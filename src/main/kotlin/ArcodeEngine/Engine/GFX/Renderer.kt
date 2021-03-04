@@ -11,23 +11,47 @@ class Renderer {
     companion object {
         /**
          * Draws a Rectangle with specified color at the specified coordinates with the specified width and height
-         * @param rectangle The rectangle you want to render
-         *
+         * @param window the window you want to render to.
+         * @param color the color (r,g,b) you want the rectangle to be. Note: the values are within 0 and 1, not 0 and 255
          */
         @JvmStatic
-        fun DrawColoredRect(window: Window, rectangle: Rectangle, color: Vector3f) {
-            ArcodeEngine.ColoredShader.Bind()
-            ArcodeEngine.ColoredShader.LoadVector3f("inColor", color)
-            ArcodeEngine.ColoredShader.LoadMatrix4f("mvMatrix", rectangle.GetTransformMatrix().mul(window.GetCamera().GetViewMatrix()))
-            ArcodeEngine.ColoredShader.LoadMatrix4f("projMatrix", window.GetCamera().GetProjectionMatrix())
+        fun DrawColoredRectRGB(window: Window, rectangle: Rectangle, color: Vector3f) {
+            ArcodeEngine.ColoredShaderRGB.Bind()
+            ArcodeEngine.ColoredShaderRGB.LoadVector3f("inColor", color)
+            ArcodeEngine.ColoredShaderRGB.LoadMatrix4f("mvMatrix", rectangle.GetTransformMatrix().mul(window.GetCamera().GetViewMatrix()))
+            ArcodeEngine.ColoredShaderRGB.LoadMatrix4f("projMatrix", window.GetCamera().GetProjectionMatrix())
             OpenGL.GLBindVertexArray(rectangle.GetMesh().vaoID)
             OpenGL.GLEnableVertexAttribArray(0)
             OpenGL.GLDrawElements(GL_TRIANGLES, rectangle.GetMesh().vertices.size, GL_UNSIGNED_INT, 0)
             OpenGL.GLDisableVertexAttribArray(0)
             OpenGL.GLBindVertexArray(0)
-            ArcodeEngine.ColoredShader.Unbind()
+            ArcodeEngine.ColoredShaderRGB.Unbind()
         }
 
+        /**
+         * Draws a Rectangle with specified color at the specified coordinates with the specified width and height
+         * @param window the window you want to render to.
+         * @param color the color (r,g,b,a) you want the rectangle to be. Note: the values are within 0 and 1, not 0 and 255
+         */
+        @JvmStatic
+        fun DrawColoredRectRGBA(window: Window, rectangle: Rectangle, color: Vector4f) {
+            ArcodeEngine.ColoredShaderRGBA.Bind()
+            ArcodeEngine.ColoredShaderRGBA.LoadVector4f("inColor", color)
+            ArcodeEngine.ColoredShaderRGBA.LoadMatrix4f("mvMatrix", rectangle.GetTransformMatrix().mul(window.GetCamera().GetViewMatrix()))
+            ArcodeEngine.ColoredShaderRGBA.LoadMatrix4f("projMatrix", window.GetCamera().GetProjectionMatrix())
+            OpenGL.GLBindVertexArray(rectangle.GetMesh().vaoID)
+            OpenGL.GLEnableVertexAttribArray(0)
+            OpenGL.GLDrawElements(GL_TRIANGLES, rectangle.GetMesh().vertices.size, GL_UNSIGNED_INT, 0)
+            OpenGL.GLDisableVertexAttribArray(0)
+            OpenGL.GLBindVertexArray(0)
+            ArcodeEngine.ColoredShaderRGBA.Unbind()
+        }
+
+        /**
+         * Draws the passed rectangle with the texture associated with the the textureID you pass.
+         * @param window the window you want to render to
+         * @param textureID the id of the texture you want the rectangle to have
+         */
         @JvmStatic
         fun DrawTexturedRect(window: Window, rectangle: Rectangle, textureID: Int) {
             ArcodeEngine.TexturedShader.Bind()

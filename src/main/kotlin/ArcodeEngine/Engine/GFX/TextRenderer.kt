@@ -19,12 +19,24 @@ class TextRenderer {
                 DrawGlyph(window, r, DEFAULT_COLOR, fontMapID)
         }
 
+        /**
+         * Draw a string with a specified color
+         * @param window The window you want to draw to
+         * @param foregroundColor the color (r,g,b)
+         */
         @JvmStatic
-        fun DrawString(window: Window, text: Text, foregroundColor: Vector3f) {
+        fun DrawStringRGB(window: Window, text: Text, foregroundColor: Vector3f) {
             for (r in text.chars)
                 DrawGlyph(window, r, foregroundColor, fontMapID)
         }
 
+        /**
+         * This is used for drawing individual characters.
+         * @param window The window you want to draw to
+         * @param foregroundColor The color (r,g,b) you want the text to be. Note: the limit for the color values is 0-1, not 0-255
+         * @param textureID The id of the texture you want the glyph to have
+         */
+        @JvmStatic
         fun DrawGlyph(window: Window, rectangle: Rectangle, foregroundColor: Vector3f, textureID: Int) {
             ArcodeEngine.GlyphShader.Bind()
             ArcodeEngine.GlyphShader.LoadMatrix4f("mvMatrix", rectangle.GetTransformMatrix())

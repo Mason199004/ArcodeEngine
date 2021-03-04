@@ -11,6 +11,10 @@ import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW
 import java.util.ArrayList
 
+/**
+ * This is the main class for the arcade cabinet, it's what initializes everything and starts the state manager.
+ */
+
 class Cabinet(window: Window) : GameState("Cabinet", window) {
 
     private lateinit var gameTitleList: ArrayList<Text>
@@ -56,7 +60,8 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
     override fun Init() {
         OpenGL.CreateCapabilities()
 
-        ArcodeEngine.ColoredShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredFrag.glsl")
+        ArcodeEngine.ColoredShaderRGB = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredFrag.glsl")
+        ArcodeEngine.ColoredShaderRGBA = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredRGBAVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/coloredRGBAFrag.glsl")
         ArcodeEngine.TexturedShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/texturedFrag.glsl")
         ArcodeEngine.GlyphShader = Shader("src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/glyphVert.glsl", "src/main/kotlin/ArcodeEngine/Engine/GFX/Shader/glyphFrag.glsl")
 
@@ -103,7 +108,7 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
     }
 
     override fun Render() {
-        TextRenderer.DrawString(window, menuTitle, ACCENT_COLOR)
+        TextRenderer.DrawStringRGB(window, menuTitle, ACCENT_COLOR)
 
         for(title in gameTitleList)
             TextRenderer.DrawString(window, title)
