@@ -45,8 +45,6 @@ public class PongExample extends GameState {
 
     @Override
     public void Tick() {
-        TryExit();
-
         float leftJoystick = Controller.GetJoystickState(1).GetY() * -1f * 0.3f;
         float rightJoystick = Controller.GetJoystickState(2).GetY() * -0.3f;
 
@@ -114,12 +112,12 @@ public class PongExample extends GameState {
 
     @Override
     public void Render() {
-        Renderer.DrawColoredRectRGB(window, leftPaddle, new Vector3f(0f, 1f, 1f));
-        Renderer.DrawColoredRectRGB(window, rightPaddle, new Vector3f(0f, 1f, 1f));
-        Renderer.DrawColoredRectRGB(window, ball, new Vector3f(1f, 0f, 0f));
+        Renderer.DrawRect(window, leftPaddle, new Vector3f(0f, 1f, 1f));
+        Renderer.DrawRect(window, rightPaddle, new Vector3f(0f, 1f, 1f));
+        Renderer.DrawRect(window, ball, new Vector3f(1f, 0f, 0f));
 
-        TextRenderer.DrawString(window, leftScoreText);
-        TextRenderer.DrawString(window, rightScoreText);
+        Renderer.DrawString(window, leftScoreText);
+        Renderer.DrawString(window, rightScoreText);
     }
 
 }

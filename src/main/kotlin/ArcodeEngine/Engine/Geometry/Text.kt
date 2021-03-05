@@ -226,8 +226,8 @@ class Text (private var x: Float, private var y: Float, private var msg: String,
         Generate()
     }
 
-    fun AddY(y: Float) {
+    fun SetY(y: Float) {
         for(c in chars)
-            c.SetY(c.GetY() + y)
+            c.SetY(y)
     }
 }
