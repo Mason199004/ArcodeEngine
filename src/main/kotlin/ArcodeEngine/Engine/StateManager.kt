@@ -24,6 +24,7 @@ class StateManager {
                 delta += (now - lastTime) / ns
                 lastTime = now
                 while (delta >= 1) {
+                    currentState.TryExit()
                     currentState.Tick()
                     if(currentState.window.resized)
                         OpenGL.GLViewport(0, 0, currentState.window.dimensions.first, currentState.window.dimensions.second)

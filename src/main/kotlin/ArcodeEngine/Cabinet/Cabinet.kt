@@ -2,8 +2,8 @@ package ArcodeEngine.Cabinet
 
 import Games.Pong.PongExample
 import ArcodeEngine.Engine.*
+import ArcodeEngine.Engine.GFX.Renderer
 import ArcodeEngine.Engine.GFX.Shader.Shader
-import ArcodeEngine.Engine.GFX.TextRenderer
 import ArcodeEngine.Engine.Geometry.Rectangle
 import ArcodeEngine.Engine.Geometry.Text
 import ArcodeEngine.Engine.Util.OpenGL
@@ -19,8 +19,7 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
 
     private lateinit var gameTitleList: ArrayList<Text>
     private lateinit var menuTitle: Text
-
-    private lateinit var cursor: Rectangle
+    private lateinit var cursorSymbol: Text
 
     private val ACCENT_COLOR = Vector3f(0f, 1f, 1f)
 
@@ -69,7 +68,7 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
 
         cursorTexture = ArcodeEngine.RegisterProjectTexture(this, "arcade-cursor.png")
 
-        cursor = Rectangle(1.5f, window.GetMaxHeight() - 8.5f, 2f, 3f)
+        cursorSymbol = Text(1.5f, window.GetMaxHeight() - 8.5f, ">", 1f)
         menuTitle = Text(0.5f, window.GetMaxHeight() - 5f, "GAMES", 1.5f)
 
         /* ADD ALL NEW GAMES JUST AFTER THIS LINE SO YOU CAN RUN THEM */
@@ -104,16 +103,16 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
         if(select == GLFW.GLFW_PRESS)
             SelectHighlitedElement()
 
-        cursor.SetY(cursorY)
+        cursorSymbol.SetY(cursorY)
     }
 
     override fun Render() {
-        TextRenderer.DrawStringRGB(window, menuTitle, ACCENT_COLOR)
+        Renderer.DrawString(window, menuTitle, ACCENT_COLOR)
 
         for(title in gameTitleList)
-            TextRenderer.DrawString(window, title)
+            Renderer.DrawString(window, title)
 
-        TextRenderer.DrawGlyph(window, cursor, ACCENT_COLOR, cursorTexture)
+        Renderer.DrawString(window, cursorSymbol, ACCENT_COLOR)
     }
 
     private fun GenerateGameList() {
