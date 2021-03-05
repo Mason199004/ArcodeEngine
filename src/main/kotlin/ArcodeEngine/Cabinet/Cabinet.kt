@@ -1,5 +1,6 @@
 package ArcodeEngine.Cabinet
 
+import ArcodeEngine.Cabinet.Games.Chess
 import Games.Pong.PongExample
 import ArcodeEngine.Engine.*
 import ArcodeEngine.Engine.GFX.Renderer
@@ -73,6 +74,7 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
 
         /* ADD ALL NEW GAMES JUST AFTER THIS LINE SO YOU CAN RUN THEM */
         AddGame(PongExample(window))
+        AddGame(Chess(window))
 
         OpenGL.GLClearColor(0f, 0f, 0f, 0f)
 
