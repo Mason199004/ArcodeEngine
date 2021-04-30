@@ -1,10 +1,15 @@
 package ArcodeEngine.Cabinet.Games
 
+import ArcodeEngine.Cabinet.Cabinet
 import ArcodeEngine.Engine.*
 import ArcodeEngine.Engine.GFX.Renderer
+import ArcodeEngine.Engine.GFX.Shader.Shader
 import ArcodeEngine.Engine.Geometry.Rectangle
+import ArcodeEngine.Engine.Geometry.Text
+import ArcodeEngine.Engine.Util.Direction
 import ArcodeEngine.Engine.Util.OpenGL
 import org.joml.Vector3f
+import kotlin.properties.Delegates
 import kotlin.random.Random
 
 
@@ -29,12 +34,12 @@ class Chess(window: Window) : GameState("Chess", window) {
                 {
                     if (!i.isDigit()) {
                         list.add(
-                            Piece(
-                                Color = i.isUpperCase(),
-                                Type = pmap[i.toLowerCase()]!!,
-                                x = (num % 8),
-                                y = 7 - num / 8
-                            )
+                                Piece(
+                                        Color = i.isUpperCase(),
+                                        Type = pmap[i.toLowerCase()]!!,
+                                        x = (num % 8),
+                                        y = 7 - num / 8
+                                )
                         )
                         num++
                     }
@@ -150,16 +155,16 @@ class Piece constructor(var FirstMove: Boolean = true, var Color: Boolean = fals
         Y =y
     }
     var X: Int = 0
-    set(value)
-    {
-        rect.SetX((value * 5) + Chess.BOARD_START)
-        field = value
-    }
+        set(value)
+        {
+            rect.SetX((value * 5) + Chess.BOARD_START)
+            field = value
+        }
     var Y: Int = 0
-    set(value)
-    {
-        rect.SetY((value * 5) + 5f)
-        field = value
-    }
+        set(value)
+        {
+            rect.SetY((value * 5) + 5f)
+            field = value
+        }
     var rect = Rectangle((X * 5) + Chess.BOARD_START, (Y * 5) + 5f, 5f ,5f)
 }

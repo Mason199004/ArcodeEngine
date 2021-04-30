@@ -4,7 +4,6 @@ import ArcodeEngine.Engine.Util.Direction
 import org.joml.Matrix4f
 import org.joml.Vector2f
 import org.joml.Vector3f
-import java.awt.Dimension
 
 /**
  * This is the base class for all 2-D primitives
@@ -88,9 +87,5 @@ open class Geometry(protected var position: Vector2f, private var rotation: Floa
 
     fun GetHeight(): Float {
         return scaleXY.second
-    }
-
-    fun SetDimensions(width: Float, height: Float) {
-        scaleXY = Pair(width, height)
     }
 }

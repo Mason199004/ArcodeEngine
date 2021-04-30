@@ -20,8 +20,8 @@ class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
 
     init {
         camera = Camera(
-            ProjectionMode.ORTHOGRAPHIC,
-            Pair(dimensions.first.toFloat(), dimensions.second.toFloat())
+                ProjectionMode.ORTHOGRAPHIC,
+                Pair(dimensions.first.toFloat(), dimensions.second.toFloat())
         )
         Init()
     }

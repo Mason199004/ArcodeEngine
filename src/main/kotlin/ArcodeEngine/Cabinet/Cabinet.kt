@@ -5,7 +5,8 @@ import Games.Pong.PongExample
 import ArcodeEngine.Engine.*
 import ArcodeEngine.Engine.GFX.Renderer
 import ArcodeEngine.Engine.GFX.Shader.Shader
-import ArcodeEngine.Engine.GFX.Text
+import ArcodeEngine.Engine.Geometry.Rectangle
+import ArcodeEngine.Engine.Geometry.Text
 import ArcodeEngine.Engine.Util.OpenGL
 import org.joml.Vector3f
 import org.lwjgl.glfw.GLFW
@@ -16,13 +17,12 @@ import java.util.ArrayList
  */
 
 class Cabinet(window: Window) : GameState("Cabinet", window) {
-    private lateinit var gameTitleList: ArrayList<String>
+
+    private lateinit var gameTitleList: ArrayList<Text>
+    private lateinit var menuTitle: Text
+    private lateinit var cursorSymbol: Text
 
     private val ACCENT_COLOR = Vector3f(0f, 1f, 1f)
-
-    private val MENU_TITLE_SCALE = 2f
-    private val MENU_TITLE_X = 0.5f
-    private val MENU_TITLE_Y = window.GetMaxHeight() - Text.DEFAULT_TEXT_HEIGHT * MENU_TITLE_SCALE
 
     private var cursorTexture = 0
     private var highlightIndex = 0
@@ -36,6 +36,8 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
     }
 
     companion object {
+        var gameLibrary = hashMapOf<String, GameState>()
+
         @JvmStatic
         lateinit var wind: Window
         @JvmStatic
@@ -47,11 +49,6 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
         fun AddGame(game: GameState) {
             gameLibrary[game.name] = game
         }
-
-        var gameLibrary = hashMapOf<String, GameState>()
-
-        private const val MENU_TITLE = "Games:"
-        private const val CURSOR_SYM = ">"
 
         @JvmStatic
         fun main(args: Array<String>) {
@@ -71,6 +68,9 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
         gameTitleList = arrayListOf()
 
         cursorTexture = ArcodeEngine.RegisterProjectTexture(this, "arcade-cursor.png")
+
+        cursorSymbol = Text(1.5f, window.GetMaxHeight() - 8.5f, ">", 1f)
+        menuTitle = Text(0.5f, window.GetMaxHeight() - 5f, "GAMES", 1.5f)
 
         /* ADD ALL NEW GAMES JUST AFTER THIS LINE SO YOU CAN RUN THEM */
         AddGame(PongExample(window))
@@ -104,35 +104,28 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
         val select = GLFW.glfwGetKey(window.GetWindowHandle(), GLFW.GLFW_KEY_ENTER)
         if(select == GLFW.GLFW_PRESS)
             SelectHighlitedElement()
+
+        cursorSymbol.SetY(cursorY)
     }
 
     override fun Render() {
-        Renderer.DrawString(window, 0f, 0f, "A")
-/*
-        Renderer.DrawString(
-            window,
-            0.5f,
-            0.5f,
-            MENU_TITLE,
-            ACCENT_COLOR,
-            MENU_TITLE_SCALE
-        )
+        Renderer.DrawString(window, menuTitle, ACCENT_COLOR)
 
-        if(gameLibrary.isNotEmpty()) {
-            for ((idx, title) in gameLibrary.keys.withIndex()) {
-                Renderer.DrawString(window, 2.5f, (window.GetMaxHeight() - 8.5f) - (idx * Text.DEFAULT_TEXT_HEIGHT * 1.5f + 0.5f), title, 1.5f)
-            }
-        }
+        for(title in gameTitleList)
+            Renderer.DrawString(window, title)
 
-        Renderer.DrawString(window, 0.5f, cursorY, CURSOR_SYM, ACCENT_COLOR)
- */
+        Renderer.DrawString(window, cursorSymbol, ACCENT_COLOR)
     }
 
     private fun GenerateGameList() {
-
+        if(gameLibrary.isNotEmpty()) {
+            for ((idx, title) in gameLibrary.keys.withIndex()) {
+                gameTitleList.add(Text(4.5f, (window.GetMaxHeight() - 8.5f) - (4f * idx), title, 1f))
+            }
+        }
     }
 
     private fun SelectHighlitedElement() {
-        StateManager.PushState(gameLibrary[gameTitleList[highlightIndex]]!!)
+        StateManager.PushState(gameLibrary[gameTitleList[highlightIndex].GetMsg()]!!)
     }
 }

@@ -42,9 +42,9 @@ class Camera(var position: Vector3f, var rotation: Vector3f, var mode: Projectio
 
     fun GetViewMatrix(): Matrix4f {
         return Matrix4f().identity()
-            .rotateX(rotation.x)
-            .rotateY(rotation.y)
-            .rotateZ(rotation.z)
-            .translate(-position.x, -position.y, -position.z)
+                .rotateX(rotation.x)
+                .rotateY(rotation.y)
+                .rotateZ(rotation.z)
+                .translate(-position.x, -position.y, -position.z)
     }
 }
