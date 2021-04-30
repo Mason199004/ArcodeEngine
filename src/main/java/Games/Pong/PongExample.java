@@ -15,7 +15,6 @@ public class PongExample extends GameState {
 
     private Rectangle leftPaddle = null;
     private Rectangle rightPaddle = null;
-
     private Rectangle ball = null;
 
     private int leftScore = 0;
