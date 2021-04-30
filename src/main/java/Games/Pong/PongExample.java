@@ -8,6 +8,8 @@ import org.joml.*;
 import ArcodeEngine.Engine.GFX.*;
 import ArcodeEngine.Engine.Geometry.Rectangle;
 
+import java.lang.Math;
+
 public class PongExample extends GameState {
     private final Window window;
 
@@ -45,7 +47,7 @@ public class PongExample extends GameState {
 
     @Override
     public void Tick() {
-        float leftJoystick = Controller.GetJoystickState(1).GetY() * -1f * 0.3f;
+        float leftJoystick = Controller.GetJoystickState(1).GetY() * -0.3f;
         float rightJoystick = Controller.GetJoystickState(2).GetY() * -0.3f;
 
         leftPaddle.Move(Direction.UP, leftJoystick);
@@ -60,17 +62,14 @@ public class PongExample extends GameState {
         }
 
         if(leftPaddle.IsColliding(ball)) {
-            if(ball.GetY() > leftPaddle.GetY() + (leftPaddle.GetHeight() * (2f / 3f))) {
-                ballVelocity.y = BALL_V_SPEED;
-                ballVelocity.x = BALL_H_SPEED / 2;
-            } else if(ball.GetY() < leftPaddle.GetY() + (leftPaddle.GetHeight() / 3f)) {
-                ballVelocity.y = -BALL_V_SPEED;
-                ballVelocity.x = BALL_H_SPEED / 2;
-            } else {
-                ballVelocity.y = 0f;
-                ballVelocity.x = BALL_H_SPEED;
-            }
-        } else if(ball.GetX() < leftPaddle.GetX() + leftPaddle.GetWidth() - 0.5f) {
+            ballVelocity.x = BALL_H_SPEED;
+            float t = -(ballVelocity.y + leftJoystick);
+            if (t > 0)
+                t = Math.min(t, BALL_V_SPEED);
+            else
+                t = Math.max(t, -BALL_V_SPEED);
+            ballVelocity.y = t;
+        } else if(ball.GetX() < leftPaddle.GetX() - 0.5f) {
             ball = new Rectangle(window.GetMaxWidth() / 2, window.GetMaxHeight() / 2, 2f, 2f);
             ballVelocity.x = BALL_H_SPEED;
             ballVelocity.y = 0f;
@@ -78,17 +77,14 @@ public class PongExample extends GameState {
         }
 
         if(rightPaddle.IsColliding(ball)) {
-            if(ball.GetY() > rightPaddle.GetY() + (rightPaddle.GetHeight() * (2f / 3f))) {
-                ballVelocity.y = BALL_V_SPEED;
-                ballVelocity.x = -BALL_H_SPEED / 2;
-            } else if(ball.GetY() < rightPaddle.GetY() + (rightPaddle.GetHeight() / 3f)) {
-                ballVelocity.y = -BALL_V_SPEED;
-                ballVelocity.x = -BALL_H_SPEED / 2;
-            } else {
-                ballVelocity.y = 0f;
-                ballVelocity.x = -BALL_H_SPEED;
-            }
-        } else if(ball.GetX() + ball.GetWidth() > rightPaddle.GetX() + 0.5f) {
+            ballVelocity.x = -BALL_H_SPEED;
+            float t = -(ballVelocity.y + leftJoystick);
+            if (t > 0)
+                t = Math.min(t, BALL_V_SPEED);
+            else
+                t = Math.max(t, -BALL_V_SPEED);
+            ballVelocity.y = t;
+        } else if(ball.GetX() > rightPaddle.GetX() + 0.5f) {
             ball = new Rectangle(window.GetMaxWidth() / 2, window.GetMaxHeight() / 2, 2f, 2f);
             ballVelocity.x = -BALL_H_SPEED;
             ballVelocity.y = 0f;
