@@ -24,6 +24,7 @@ class StateManager {
                 delta += (now - lastTime) / ns
                 lastTime = now
                 while (delta >= 1) {
+                    currentState.TryExit()
                     currentState.Tick()
                     if(currentState.window.resized)
                         OpenGL.GLViewport(0, 0, currentState.window.dimensions.first, currentState.window.dimensions.second)
@@ -41,8 +42,10 @@ class StateManager {
                 if(GLFW.glfwWindowShouldClose(currentState.window.GetWindowHandle())) {
                     currentState.window.Destroy()
                     Loader.CleanUp()
-                    ArcodeEngine.ColoredShader.CleanUp()
+                    ArcodeEngine.ColoredShaderRGB.CleanUp()
+                    ArcodeEngine.ColoredShaderRGBA.CleanUp()
                     ArcodeEngine.TexturedShader.CleanUp()
+                    ArcodeEngine.GlyphShader.CleanUp()
                     exitProcess(0)
                 }
             }

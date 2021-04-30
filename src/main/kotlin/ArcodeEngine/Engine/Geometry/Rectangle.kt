@@ -33,6 +33,10 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
         mesh = Loader.LoadToVAO(vertices, textureCoordinates, indices)
     }
 
+    /**
+     * Determines whether two rectangles are colliding or not
+     * @param other the rectangle to test collision with
+     */
     fun IsColliding(other: Rectangle): Boolean {
         return (
                 (((this.position.x <= other.position.x) && (this.position.x + this.scaleXY.first >= other.position.x))
@@ -43,6 +47,13 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
                 )
     }
 
+    /**
+     * Determines whether the rectangle is colliding with the given boundaries
+     * @param leftBound the left boundary
+     * @param rightBound the right boundary
+     * @param bottomBound the bottom boundary
+     * @param topBound the top boundary
+     */
     fun IsColliding(leftBound: Float, rightBound: Float, bottomBound: Float, topBound: Float): Boolean {
         return (
                 (this.position.x <= leftBound || this.position.x + this.scaleXY.first >= rightBound
@@ -52,6 +63,10 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
 
     fun GetMesh(): Mesh {
         return mesh
+    }
+
+    fun SetTextureCoordinates(coords: FloatArray) {
+        textureCoordinates = coords
     }
 
     init {

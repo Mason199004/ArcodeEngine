@@ -112,13 +112,18 @@ class Controller
             throw RuntimeException("Joystick returned an invalid state!")
         }
 
+        /**
+         * Retrieve the state of the joystick as a value from an enum
+         * @param joystick The player's joystick you want to check (1 or 2)
+         * @return The enum value of the current state of the specified joystick
+         */
         @JvmStatic
-        fun GetJoystickState(Joystick: Int) : JoyState
+        fun GetJoystickState(joystick: Int) : JoyState
         {
-            val state = GetJoyState(Joystick)
+            val state = GetJoyState(joystick)
             if (state == JoyState.None)
             {
-                when (Joystick)
+                when (joystick)
                 {
                     1 ->
                     {
