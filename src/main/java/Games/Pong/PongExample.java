@@ -13,6 +13,7 @@ public class PongExample extends GameState {
 
     private Rectangle leftPaddle = null;
     private Rectangle rightPaddle = null;
+
     private Rectangle ball = null;
 
     private Text leftScoreText = null;
