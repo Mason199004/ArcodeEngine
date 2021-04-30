@@ -10,8 +10,6 @@ import javax.imageio.ImageIO
 
 open class Mesh(var vaoID: Int, var vertices: FloatArray, var textureCoordinates: FloatArray, var indices: IntArray) {}
 
-class TexturedMesh(var texture: Texture, vaoID: Int, vertices: FloatArray, textureCoordinates: FloatArray, indices: IntArray) : Mesh(vaoID, vertices, textureCoordinates, indices) {}
-
 class Texture(var path: String) {
     var width: Int = 0
     var height: Int = 0
@@ -48,7 +46,7 @@ class Texture(var path: String) {
         buffer.flip()
         val tex: Int = glGenTextures()
         glBindTexture(GL_TEXTURE_2D, tex)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer)
         glBindTexture(GL_TEXTURE_2D, 0)

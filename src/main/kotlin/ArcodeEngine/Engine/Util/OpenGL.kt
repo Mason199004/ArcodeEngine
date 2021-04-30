@@ -159,6 +159,10 @@ class OpenGL {
             glUniform3f(uniform, v0, v1, v2)
         }
 
+        fun GLUniform4f(uniform: Int, v0: Float, v1: Float, v2: Float, v3: Float) {
+            glUniform4f(uniform, v0, v1, v2, v3)
+        }
+
         fun GLUniformMatrix4fv(uniform: Int, transpose: Boolean, value: FloatBuffer) {
             glUniformMatrix4fv(uniform, transpose, value)
         }

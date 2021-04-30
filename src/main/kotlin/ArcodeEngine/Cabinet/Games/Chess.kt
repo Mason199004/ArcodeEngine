@@ -1,26 +1,24 @@
 package ArcodeEngine.Cabinet.Games
 
-import ArcodeEngine.Cabinet.Cabinet
 import ArcodeEngine.Engine.*
 import ArcodeEngine.Engine.GFX.Renderer
-import ArcodeEngine.Engine.GFX.Shader.Shader
-import ArcodeEngine.Engine.GFX.TextRenderer
 import ArcodeEngine.Engine.Geometry.Rectangle
-import ArcodeEngine.Engine.Geometry.Text
-import ArcodeEngine.Engine.Util.Direction
 import ArcodeEngine.Engine.Util.OpenGL
 import org.joml.Vector3f
-import kotlin.properties.Delegates
 import kotlin.random.Random
+
+
 
 
 class Chess(window: Window) : GameState("Chess", window) {
 
 
 
+
+
     companion object {
         val pmap = mapOf(Pair('p', PieceType.PAWN), Pair('n', PieceType.KNIGHT), Pair('b', PieceType.BISHOP), Pair('r', PieceType.ROOK), Pair('q', PieceType.QUEEN), Pair('k', PieceType.KING))
-
+        var BOARD_START = 0f
         fun FENToPieces(str: String): MutableList<Piece>
         {
             var list = mutableListOf<Piece>()
@@ -73,13 +71,14 @@ class Chess(window: Window) : GameState("Chess", window) {
     var Pieces = mutableListOf<Piece>()
     val rmap = mapOf(Pair(PieceType.PAWN,Pair(WPAWN, BPAWN)), Pair(PieceType.KNIGHT,Pair(WKNIGHT, BKNIGHT)), Pair(PieceType.BISHOP,Pair(WBISHOP, BBISHOP)), Pair(PieceType.ROOK,Pair(WROOK, BROOK)), Pair(PieceType.QUEEN,Pair(WQUEEN, BQUEEN)), Pair(PieceType.KING,Pair(WKING, BKING)))
     override fun Init() {
+        BOARD_START = window.GetMaxWidth() / 2 - (4 * 5)
         OpenGL.GLClearColor(0.1f, 0.1f, 0.1f, 0f)
 
         wind = window;
         spaces = mutableListOf();
         for (i in 0..63)
         {
-            spaces.add(Rectangle(i%8*5f + 17.5f,i/8 * 5f + 5, 5f, 5f));
+            spaces.add(Rectangle(i%8*5f + BOARD_START,i/8 * 5f + 5, 5f, 5f));
         }
         Pieces = FENToPieces("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
         StateManager.TickState()
@@ -87,40 +86,42 @@ class Chess(window: Window) : GameState("Chess", window) {
 
     var ticks = 0
     var spaces = mutableListOf<Rectangle>()
-
+    var rect = Rectangle(0f,0f, 5f, 5f)
     override fun Tick()
     {
-        if (ticks % 20 == 0)
+        if (ticks % 2 == 0)
         {
             Pieces[Random.nextInt(0, Pieces.size)].X = Random.nextInt(0, 8).also { Pieces[Random.nextInt(0, Pieces.size)].Y = Random.nextInt(0, 8) }
         }
+
         ticks++
     }
     override fun Render()
     {
+
         var ii = 0
         for (i in spaces)
         {
             if ((ii / 8) % 2 == 0)
             {
                 if (ii % 2 != 0)
-                    Renderer.DrawColoredRect(window, i, Vector3f(1f,1f,1f))
+                    Renderer.DrawRect(window, i, Vector3f(1f,1f,1f))
                 else
-                    Renderer.DrawColoredRect(window, i, Vector3f(0.2f,0.3f,0.2f))
+                    Renderer.DrawRect(window, i, Vector3f(0.2f,0.3f,0.2f))
             }
             else
             {
                 if (ii % 2 ==0)
-                    Renderer.DrawColoredRect(window, i, Vector3f(1f,1f,1f))
+                    Renderer.DrawRect(window, i, Vector3f(1f,1f,1f))
                 else
-                    Renderer.DrawColoredRect(window, i, Vector3f(0.2f,0.3f,0.2f))
+                    Renderer.DrawRect(window, i, Vector3f(0.2f,0.3f,0.2f))
             }
             ii++
         }
 
         for (i in Pieces)
         {
-            Renderer.DrawTexturedRect(window, i.rect, when(i.Color)
+            Renderer.DrawRect(window, i.rect, when(i.Color)
             {
                 true -> rmap[i.Type]?.first!!
                 false -> rmap[i.Type]?.second!!
@@ -151,14 +152,14 @@ class Piece constructor(var FirstMove: Boolean = true, var Color: Boolean = fals
     var X: Int = 0
     set(value)
     {
-        rect.position.x = (value * 5) + 17.5f
+        rect.SetX((value * 5) + Chess.BOARD_START)
         field = value
     }
     var Y: Int = 0
     set(value)
     {
-        rect.position.y = (value * 5) + 5f
+        rect.SetY((value * 5) + 5f)
         field = value
     }
-    var rect = Rectangle((X * 5) + 17.5f, (Y * 5) + 5f, 5f ,5f)
+    var rect = Rectangle((X * 5) + Chess.BOARD_START, (Y * 5) + 5f, 5f ,5f)
 }
