@@ -65,6 +65,10 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
         return mesh
     }
 
+    fun SetTextureCoordinates(coords: FloatArray) {
+        textureCoordinates = coords
+    }
+
     init {
         mesh = Loader.LoadToVAO(vertices, textureCoordinates, indices)
     }
