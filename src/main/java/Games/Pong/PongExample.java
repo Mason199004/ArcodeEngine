@@ -21,8 +21,8 @@ public class PongExample extends GameState {
     private int leftScore = 0;
     private int rightScore = 0;
 
-    private final float BALL_H_SPEED = 0.4f;
-    private final float BALL_V_SPEED = 0.3f;
+    private final float BALL_H_SPEED = 20f;
+    private final float BALL_V_SPEED = 17f;
     private final Vector2f ballVelocity = new Vector2f(BALL_H_SPEED, 0f);
 
     public PongExample(Window window) {
@@ -44,12 +44,12 @@ public class PongExample extends GameState {
     }
 
     @Override
-    public void Tick() {
-        float leftJoystick = Controller.GetJoystickState(1).GetY() * -1f * 0.3f;
-        float rightJoystick = Controller.GetJoystickState(2).GetY() * -0.3f;
+    public void Update(float ts) {
+        float leftJoystick = Controller.GetJoystickState(1).GetY() * 1f * 17f;
+        float rightJoystick = Controller.GetJoystickState(2).GetY() * 17f;
 
-        leftPaddle.Move(Direction.UP, leftJoystick);
-        rightPaddle.Move(Direction.UP, rightJoystick);
+        leftPaddle.Move(0f, leftJoystick * ts);
+        rightPaddle.Move(0f, rightJoystick * ts);
 
         if(ball.GetY() < 0) {
             ball.SetY(0f);
@@ -107,11 +107,8 @@ public class PongExample extends GameState {
             rightPaddle.SetY(window.GetMaxHeight() - rightPaddle.GetHeight());
         }
 
-        ball.Move(ballVelocity);
-    }
+        ball.Move(ballVelocity.x * ts, ballVelocity.y * ts);
 
-    @Override
-    public void Render() {
         Renderer.DrawRect(window, leftPaddle, new Vector3f(0f, 1f, 1f));
         Renderer.DrawRect(window, rightPaddle, new Vector3f(0f, 1f, 1f));
         Renderer.DrawRect(window, ball, new Vector3f(1f, 0f, 0f));

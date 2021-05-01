@@ -1,15 +1,10 @@
 package ArcodeEngine.Cabinet.Games
 
-import ArcodeEngine.Cabinet.Cabinet
 import ArcodeEngine.Engine.*
 import ArcodeEngine.Engine.GFX.Renderer
-import ArcodeEngine.Engine.GFX.Shader.Shader
 import ArcodeEngine.Engine.Geometry.Rectangle
-import ArcodeEngine.Engine.Geometry.Text
-import ArcodeEngine.Engine.Util.Direction
 import ArcodeEngine.Engine.Util.OpenGL
 import org.joml.Vector3f
-import kotlin.properties.Delegates
 import kotlin.random.Random
 
 
@@ -86,13 +81,13 @@ class Chess(window: Window) : GameState("Chess", window) {
             spaces.add(Rectangle(i%8*5f + BOARD_START,i/8 * 5f + 5, 5f, 5f));
         }
         Pieces = FENToPieces("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
-        StateManager.TickState()
+        StateManager.Start()
     }
 
     var ticks = 0
     var spaces = mutableListOf<Rectangle>()
     var rect = Rectangle(0f,0f, 5f, 5f)
-    override fun Tick()
+    override fun Update(ts: Float)
     {
         if (ticks % 2 == 0)
         {
@@ -100,9 +95,6 @@ class Chess(window: Window) : GameState("Chess", window) {
         }
 
         ticks++
-    }
-    override fun Render()
-    {
 
         var ii = 0
         for (i in spaces)
@@ -132,8 +124,6 @@ class Chess(window: Window) : GameState("Chess", window) {
                 false -> rmap[i.Type]?.second!!
             })
         }
-
-
     }
 }
 

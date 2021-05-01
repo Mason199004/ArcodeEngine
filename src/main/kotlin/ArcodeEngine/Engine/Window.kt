@@ -1,9 +1,11 @@
 package ArcodeEngine.Engine
 
 import org.lwjgl.glfw.*
-import org.lwjgl.glfw.GLFW
+import org.lwjgl.glfw.GLFW.*
+import org.lwjgl.opengl.GL46.*
 import org.lwjgl.system.MemoryUtil
 import java.lang.IllegalStateException
+import ArcodeEngine.Engine.Util.Input
 
 class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
     var resized: Boolean = false
@@ -30,47 +32,39 @@ class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
 
         // Setup an error callback. The default implementation
         // will print the error message in System.err.
-        errorCallback = GLFW.glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err))
+        errorCallback = glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err))
 
-        // Initialize GLFW. Most GLFW functions will not work before doing this.
-        if ( !GLFW.glfwInit()) {
+        // Initialize  Most GLFW functions will not work before doing this.
+        if ( !glfwInit()) {
             throw IllegalStateException("Unable to initialize GLFW")
         }
 
         // Configure our window
-        GLFW.glfwDefaultWindowHints()
-        GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE)
-        GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE)
+        glfwDefaultWindowHints()
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE)
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE)
 
         // Create the window
         if(fullscreen)
-            window = GLFW.glfwCreateWindow(1920, 1080, "Arcode Engine", GLFW.glfwGetPrimaryMonitor(), MemoryUtil.NULL)
+            window = glfwCreateWindow(1920, 1080, "Arcode Engine", glfwGetPrimaryMonitor(), MemoryUtil.NULL)
         else
-            window = GLFW.glfwCreateWindow(dimensions.first, dimensions.second, "Arcode Engine", MemoryUtil.NULL, MemoryUtil.NULL)
+            window = glfwCreateWindow(dimensions.first, dimensions.second, "Arcode Engine", MemoryUtil.NULL, MemoryUtil.NULL)
         if (window == MemoryUtil.NULL) {
             throw RuntimeException("Failed to create the GLFW window")
         }
 
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        keyCallback = GLFW.glfwSetKeyCallback(window, object : GLFWKeyCallback() {
-            override fun invoke(window: Long,
-                                key: Int,
-                                scancode: Int,
-                                action: Int,
-                                mods: Int) {
+        keyCallback = glfwSetKeyCallback(window, Input())
 
-            }
-        })
-
-        resizeCallback = GLFW.glfwSetFramebufferSizeCallback(window
+        resizeCallback = glfwSetFramebufferSizeCallback(window
         ) { _, width, height -> dimensions = Pair(width, height); resized = true }
 
         // Get the resolution of the primary monitor
-        val vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor())
+        val vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor())
 
         // Center our window
         if (vidmode != null) {
-            GLFW.glfwSetWindowPos(
+            glfwSetWindowPos(
                     window,
                     (vidmode.width() - dimensions.first) / 2,
                     (vidmode.height() - dimensions.second) / 2
@@ -78,23 +72,23 @@ class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
         }
 
         // Make the OpenGL context current
-        GLFW.glfwMakeContextCurrent(window)
+        glfwMakeContextCurrent(window)
 
         // Enable v-sync (Change to 0/GLFW_FALSE to turn it off)
-        GLFW.glfwSwapInterval(GLFW.GLFW_TRUE)
+        glfwSwapInterval(GLFW_FALSE)
 
         // Make the window visible
-        GLFW.glfwShowWindow(window)
+        glfwShowWindow(window)
     }
 
     fun Destroy() {
         // Free the window callbacks and destroy the window
         Callbacks.glfwFreeCallbacks(window)
-        GLFW.glfwDestroyWindow(window)
+        glfwDestroyWindow(window)
 
         // Terminate GLFW and free the error callback
-        GLFW.glfwTerminate()
-        GLFW.glfwSetErrorCallback(null)?.free()
+        glfwTerminate()
+        glfwSetErrorCallback(null)?.free()
     }
 
     fun GetMaxWidth(): Float {
@@ -115,5 +109,25 @@ class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
 
     fun GetWindowHandle(): Long {
         return window
+    }
+
+    fun ShouldClose(): Boolean {
+        return glfwWindowShouldClose(window)
+    }
+
+    fun SetShouldClose(value: Boolean) {
+        glfwSetWindowShouldClose(window, value)
+    }
+
+    fun SwapBuffers() {
+        glfwSwapBuffers(window)
+    }
+
+    fun PollEvents() {
+        glfwPollEvents()
+    }
+
+    fun Clear() {
+        glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
     }
 }

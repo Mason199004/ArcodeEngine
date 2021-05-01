@@ -5,7 +5,6 @@ import Games.Pong.PongExample
 import ArcodeEngine.Engine.*
 import ArcodeEngine.Engine.GFX.Renderer
 import ArcodeEngine.Engine.GFX.Shader.Shader
-import ArcodeEngine.Engine.Geometry.Rectangle
 import ArcodeEngine.Engine.Geometry.Text
 import ArcodeEngine.Engine.Util.OpenGL
 import org.joml.Vector3f
@@ -79,10 +78,10 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
         OpenGL.GLClearColor(0f, 0f, 0f, 0f)
 
         GenerateGameList()
-        StateManager.TickState()
+        StateManager.Start()
     }
 
-    override fun Tick() {
+    override fun Update(ts: Float) {
         val esc = GLFW.glfwGetKey(window.GetWindowHandle(), GLFW.GLFW_KEY_ESCAPE)
         if(esc == GLFW.GLFW_PRESS)
             GLFW.glfwSetWindowShouldClose(window.GetWindowHandle(), true)
@@ -106,9 +105,7 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
             SelectHighlitedElement()
 
         cursorSymbol.SetY(cursorY)
-    }
 
-    override fun Render() {
         Renderer.DrawString(window, menuTitle, ACCENT_COLOR)
 
         for(title in gameTitleList)
