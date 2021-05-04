@@ -6,8 +6,9 @@ import ArcodeEngine.Engine.*
 import ArcodeEngine.Engine.GFX.Renderer
 import ArcodeEngine.Engine.GFX.Shader.Shader
 import ArcodeEngine.Engine.Geometry.Text
+import ArcodeEngine.Engine.Util.Input
 import ArcodeEngine.Engine.Util.OpenGL
-import org.joml.Vector3f
+import org.joml.Vector4f
 import org.lwjgl.glfw.GLFW
 import java.util.ArrayList
 
@@ -17,14 +18,17 @@ import java.util.ArrayList
 
 class Cabinet(window: Window) : GameState("Cabinet", window) {
 
-    private lateinit var gameTitleList: ArrayList<Text>
-    private lateinit var menuTitle: Text
-    private lateinit var cursorSymbol: Text
+    private lateinit var gameTitleList: ArrayList<String>
 
-    private val ACCENT_COLOR = Vector3f(0f, 1f, 1f)
+    private val ACCENT_COLOR = Vector4f(0f, 1f, 1f, 1f)
+    private val MENU_TITLE_TEXT_SCALE = 2.5f
+    private val MENU_ITEM_TEXT_SCALE = 2f
 
     private var cursorTexture = 0
     private var highlightIndex = 0
+
+    private val titleX = 0.5f
+    private val titleY = window.GetMaxHeight() - (Text.CHAR_HEIGHT * MENU_TITLE_TEXT_SCALE) - 0.5f
 
     private var isNavigating = false
 
@@ -68,9 +72,6 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
 
         cursorTexture = ArcodeEngine.RegisterProjectTexture(this, "arcade-cursor.png")
 
-        cursorSymbol = Text(1.5f, window.GetMaxHeight() - 8.5f, ">", 1f)
-        menuTitle = Text(0.5f, window.GetMaxHeight() - 5f, "GAMES", 1.5f)
-
         /* ADD ALL NEW GAMES JUST AFTER THIS LINE SO YOU CAN RUN THEM */
         AddGame(PongExample(window))
         AddGame(Chess(window))
@@ -82,10 +83,6 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
     }
 
     override fun Update(ts: Float) {
-        val esc = GLFW.glfwGetKey(window.GetWindowHandle(), GLFW.GLFW_KEY_ESCAPE)
-        if(esc == GLFW.GLFW_PRESS)
-            GLFW.glfwSetWindowShouldClose(window.GetWindowHandle(), true)
-
         if(!isNavigating) {
             if(Controller.GetJoystickState(2).GetY() > 0 && cursorY < window.GetMaxHeight() - 8.5f) {
                 cursorY += 4f
@@ -100,29 +97,26 @@ class Cabinet(window: Window) : GameState("Cabinet", window) {
         }
         isNavigating = Controller.GetJoystickState(2).GetY() != 0
 
-        val select = GLFW.glfwGetKey(window.GetWindowHandle(), GLFW.GLFW_KEY_ENTER)
-        if(select == GLFW.GLFW_PRESS)
+        if(Input.IsPressed(GLFW.GLFW_KEY_ENTER))
             SelectHighlitedElement()
 
-        cursorSymbol.SetY(cursorY)
+        Renderer.DrawString(window, "GAMES", titleX, titleY, MENU_TITLE_TEXT_SCALE, ACCENT_COLOR)
 
-        Renderer.DrawString(window, menuTitle, ACCENT_COLOR)
+        for((idx, title) in gameTitleList.withIndex())
+            Renderer.DrawString(window, title, 4.5f, (window.GetMaxHeight() - 8.5f) - (4f * idx), MENU_ITEM_TEXT_SCALE)
 
-        for(title in gameTitleList)
-            Renderer.DrawString(window, title)
-
-        Renderer.DrawString(window, cursorSymbol, ACCENT_COLOR)
+        Renderer.DrawString(window, "*", 1.5f, cursorY, MENU_ITEM_TEXT_SCALE, ACCENT_COLOR)
     }
 
     private fun GenerateGameList() {
         if(gameLibrary.isNotEmpty()) {
-            for ((idx, title) in gameLibrary.keys.withIndex()) {
-                gameTitleList.add(Text(4.5f, (window.GetMaxHeight() - 8.5f) - (4f * idx), title, 1f))
+            for(title in gameLibrary.keys) {
+                gameTitleList.add(title)
             }
         }
     }
 
     private fun SelectHighlitedElement() {
-        StateManager.PushState(gameLibrary[gameTitleList[highlightIndex].GetMsg()]!!)
+        StateManager.PushState(gameLibrary[gameTitleList[highlightIndex]]!!)
     }
 }

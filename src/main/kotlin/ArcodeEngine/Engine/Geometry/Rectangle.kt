@@ -65,6 +65,10 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
         return mesh
     }
 
+    fun SetScale(x: Float, y: Float) {
+        scaleXY = Pair(x, y)
+    }
+
     init {
         mesh = Loader.LoadToVAO(vertices, textureCoordinates, indices)
     }

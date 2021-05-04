@@ -75,7 +75,7 @@ class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
         glfwMakeContextCurrent(window)
 
         // Enable v-sync (Change to 0/GLFW_FALSE to turn it off)
-        glfwSwapInterval(GLFW_FALSE)
+        glfwSwapInterval(GLFW_TRUE)
 
         // Make the window visible
         glfwShowWindow(window)

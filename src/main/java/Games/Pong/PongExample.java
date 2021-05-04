@@ -15,18 +15,19 @@ public class PongExample extends GameState {
     private Rectangle rightPaddle = null;
     private Rectangle ball = null;
 
-    private Text leftScoreText = null;
-    private Text rightScoreText = null;
-
+    private static final float SCORE_TEXT_SCALE = 4f;
     private int leftScore = 0;
     private int rightScore = 0;
+    private float leftScoreX;
+    private float rightScoreX;
+    private float scoreY;
 
-    private final float BALL_H_SPEED = 20f;
-    private final float BALL_V_SPEED = 17f;
+    private static final float BALL_H_SPEED = 20f;
+    private static final float BALL_V_SPEED = 17f;
     private final Vector2f ballVelocity = new Vector2f(BALL_H_SPEED, 0f);
 
     public PongExample(Window window) {
-        super("Pong", window);
+        super("Pong! (Example)", window);
         this.window = window;
     }
 
@@ -35,12 +36,13 @@ public class PongExample extends GameState {
         leftScore = 0;
         rightScore = 0;
 
+        leftScoreX = 0f;
+        rightScoreX = window.GetMaxWidth() - Text.CHAR_WIDTH * SCORE_TEXT_SCALE * 2;
+        scoreY = window.GetMaxHeight() - Text.CHAR_HEIGHT * SCORE_TEXT_SCALE;
+
         leftPaddle = new Rectangle(1f, 10f, 2f, 9f);
         rightPaddle = new Rectangle(window.GetMaxWidth() - 3, 10f, 2f, 9f);
         ball = new Rectangle(window.GetMaxWidth() / 2, window.GetMaxHeight() / 2, 2f, 2f);
-
-        leftScoreText = new Text(0f, window.GetMaxHeight() - 6f, Integer.toString(leftScore), 2f);
-        rightScoreText = new Text(window.GetMaxWidth() - 8f, window.getMaxHeight() - 6f, Integer.toString(rightScore), 2f);
     }
 
     @Override
@@ -74,7 +76,7 @@ public class PongExample extends GameState {
             ball = new Rectangle(window.GetMaxWidth() / 2, window.GetMaxHeight() / 2, 2f, 2f);
             ballVelocity.x = BALL_H_SPEED;
             ballVelocity.y = 0f;
-            rightScoreText.SetMsg(Integer.toString(++rightScore));
+            rightScore++;
         }
 
         if(rightPaddle.IsColliding(ball)) {
@@ -92,7 +94,7 @@ public class PongExample extends GameState {
             ball = new Rectangle(window.GetMaxWidth() / 2, window.GetMaxHeight() / 2, 2f, 2f);
             ballVelocity.x = -BALL_H_SPEED;
             ballVelocity.y = 0f;
-            leftScoreText.SetMsg(Integer.toString(++leftScore));
+            leftScore++;
         }
 
         if(leftPaddle.GetY() < 0) {
@@ -113,8 +115,8 @@ public class PongExample extends GameState {
         Renderer.DrawRect(window, rightPaddle, new Vector3f(0f, 1f, 1f));
         Renderer.DrawRect(window, ball, new Vector3f(1f, 0f, 0f));
 
-        Renderer.DrawString(window, leftScoreText);
-        Renderer.DrawString(window, rightScoreText);
+        Renderer.DrawString(window, String.valueOf(leftScore), leftScoreX, scoreY, 4f);
+        Renderer.DrawString(window, String.valueOf(rightScore), rightScoreX, scoreY, 4f);
     }
 
 }
