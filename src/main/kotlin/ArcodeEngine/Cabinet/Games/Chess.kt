@@ -29,12 +29,12 @@ class Chess(window: Window) : GameState("Chess", window) {
                 {
                     if (!i.isDigit()) {
                         list.add(
-                            Piece(
-                                Color = i.isUpperCase(),
-                                Type = pmap[i.toLowerCase()]!!,
-                                x = (num % 8),
-                                y = 7 - num / 8
-                            )
+                                Piece(
+                                        Color = i.isUpperCase(),
+                                        Type = pmap[i.toLowerCase()]!!,
+                                        x = (num % 8),
+                                        y = 7 - num / 8
+                                )
                         )
                         num++
                     }
@@ -81,13 +81,13 @@ class Chess(window: Window) : GameState("Chess", window) {
             spaces.add(Rectangle(i%8*5f + BOARD_START,i/8 * 5f + 5, 5f, 5f));
         }
         Pieces = FENToPieces("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
-        StateManager.TickState()
+        StateManager.Start()
     }
 
     var ticks = 0
     var spaces = mutableListOf<Rectangle>()
     var rect = Rectangle(0f,0f, 5f, 5f)
-    override fun Tick()
+    override fun Update(ts: Float)
     {
         if (ticks % 2 == 0)
         {
@@ -95,9 +95,6 @@ class Chess(window: Window) : GameState("Chess", window) {
         }
 
         ticks++
-    }
-    override fun Render()
-    {
 
         var ii = 0
         for (i in spaces)
@@ -127,8 +124,6 @@ class Chess(window: Window) : GameState("Chess", window) {
                 false -> rmap[i.Type]?.second!!
             })
         }
-
-
     }
 }
 
@@ -150,16 +145,16 @@ class Piece constructor(var FirstMove: Boolean = true, var Color: Boolean = fals
         Y =y
     }
     var X: Int = 0
-    set(value)
-    {
-        rect.SetX((value * 5) + Chess.BOARD_START)
-        field = value
-    }
+        set(value)
+        {
+            rect.SetX((value * 5) + Chess.BOARD_START)
+            field = value
+        }
     var Y: Int = 0
-    set(value)
-    {
-        rect.SetY((value * 5) + 5f)
-        field = value
-    }
+        set(value)
+        {
+            rect.SetY((value * 5) + 5f)
+            field = value
+        }
     var rect = Rectangle((X * 5) + Chess.BOARD_START, (Y * 5) + 5f, 5f ,5f)
 }

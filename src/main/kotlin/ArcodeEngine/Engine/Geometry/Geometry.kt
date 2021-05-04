@@ -10,27 +10,10 @@ import java.awt.Dimension
  * This is the base class for all 2-D primitives
  * */
 open class Geometry(protected var position: Vector2f, private var rotation: Float, protected var scaleXY: Pair<Float, Float>) {
-    /**
-     * @param direction The direction (UP, DOWN, LEFT, RIGHT) that you want to move in.
-     * @param distance The distance you want to move
-     * */
-    fun Move(direction: Direction, distance: Float) {
-        when(direction) {
-            Direction.UP -> {
-                position.add(0f, -distance)
-            }
-            Direction.DOWN -> {
-                position.add(0f, distance)
-            }
-            Direction.LEFT -> {
-                position.add(-distance, 0f)
-            }
-            Direction.RIGHT -> {
-                position.add(distance, 0f)
-            }
-        }
-    }
 
+    fun Move(x: Float, y: Float) {
+        position.add(x, y)
+    }
     fun Move(vec: Vector2f) {
         position.add(vec)
     }

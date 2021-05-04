@@ -65,8 +65,8 @@ class Rectangle(x: Float, y: Float, width: Float, height: Float) : Geometry(Vect
         return mesh
     }
 
-    fun SetTextureCoordinates(coords: FloatArray) {
-        textureCoordinates = coords
+    fun SetScale(x: Float, y: Float) {
+        scaleXY = Pair(x, y)
     }
 
     init {

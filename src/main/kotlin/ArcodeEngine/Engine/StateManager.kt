@@ -1,6 +1,8 @@
 package ArcodeEngine.Engine
 
 import ArcodeEngine.Engine.GFX.Loader
+import ArcodeEngine.Engine.GFX.Shader.Shader
+import ArcodeEngine.Engine.Util.Input
 import ArcodeEngine.Engine.Util.OpenGL
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.opengl.GL46.*
@@ -12,50 +14,35 @@ class StateManager {
         private val states: Stack<GameState> = Stack()
         private lateinit var currentState: GameState
 
-        fun TickState() {
-            var lastTime = System.nanoTime()
-            val amountOfTicks = 60.0
-            val ns = 1000000000 / amountOfTicks
-            var delta = 0.0
-            var frames = 0
-            var timer = System.currentTimeMillis()
-            while (true) {
-                val now = System.nanoTime()
-                delta += (now - lastTime) / ns
-                lastTime = now
-                while (delta >= 1) {
-                    currentState.TryExit()
-                    currentState.Tick()
-                    if(currentState.window.resized)
-                        OpenGL.GLViewport(0, 0, currentState.window.dimensions.first, currentState.window.dimensions.second)
-                    delta--
-                }
+        private var lastTime = 0f
 
-                Render(currentState::Render)
-                frames++
-                if (System.currentTimeMillis() - timer > 1000) {
-                    timer += 1000
-                    println("\u001b[1;34mFPS: \u001b[1;32m$frames\u001b[0;0m")
-                    frames = 0
-                }
+        fun Start() {
+            while(true) {
+                val time = GLFW.glfwGetTime().toFloat()
+                val deltaTime = time - lastTime
+                lastTime = time
 
-                if(GLFW.glfwWindowShouldClose(currentState.window.GetWindowHandle())) {
-                    currentState.window.Destroy()
-                    Loader.CleanUp()
-                    ArcodeEngine.ColoredShaderRGB.CleanUp()
-                    ArcodeEngine.ColoredShaderRGBA.CleanUp()
-                    ArcodeEngine.TexturedShader.CleanUp()
-                    ArcodeEngine.GlyphShader.CleanUp()
+                currentState.window.Clear()
+                currentState.Update(deltaTime)
+                currentState.TryExit()
+
+                currentState.window.SwapBuffers()
+                currentState.window.PollEvents()
+
+                if(currentState.window.ShouldClose()) {
+                    CleanUp()
                     exitProcess(0)
                 }
             }
         }
 
-        private fun Render(render: () -> Unit) {
-            OpenGL.GLClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
-            render()
-            GLFW.glfwSwapBuffers(currentState.window.GetWindowHandle())
-            GLFW.glfwPollEvents()
+        private fun CleanUp() {
+            currentState.window.Destroy()
+            Loader.CleanUp()
+            ArcodeEngine.ColoredShaderRGB.CleanUp()
+            ArcodeEngine.ColoredShaderRGBA.CleanUp()
+            ArcodeEngine.GlyphShader.CleanUp()
+            ArcodeEngine.TexturedShader.CleanUp()
         }
 
         @JvmStatic
@@ -69,6 +56,10 @@ class StateManager {
         fun PopState() {
             states.pop()
             currentState = states.peek()
+        }
+
+        fun GetSize(): Int {
+            return states.size
         }
     }
 }

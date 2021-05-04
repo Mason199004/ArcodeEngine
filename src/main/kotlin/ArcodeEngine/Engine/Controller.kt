@@ -17,13 +17,13 @@ class Controller
                 {
                     if(GLFW.glfwJoystickPresent(GLFW.GLFW_JOYSTICK_2))
                         arr[0] = GLFW.glfwGetJoystickAxes(GLFW.GLFW_JOYSTICK_2)!![0]
-                        arr[1] = GLFW.glfwGetJoystickAxes(GLFW.GLFW_JOYSTICK_2)!![1]
+                    arr[1] = GLFW.glfwGetJoystickAxes(GLFW.GLFW_JOYSTICK_2)!![1]
                 }
                 2 ->
                 {
                     if(GLFW.glfwJoystickPresent(GLFW.GLFW_JOYSTICK_3))
                         arr[0] = GLFW.glfwGetJoystickAxes(GLFW.GLFW_JOYSTICK_3)!![0]
-                        arr[1] = GLFW.glfwGetJoystickAxes(GLFW.GLFW_JOYSTICK_3)!![1]
+                    arr[1] = GLFW.glfwGetJoystickAxes(GLFW.GLFW_JOYSTICK_3)!![1]
                 }
             }
             return arr
