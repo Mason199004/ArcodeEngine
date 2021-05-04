@@ -5,6 +5,7 @@ import ArcodeEngine.Engine.GFX.Renderer
 import ArcodeEngine.Engine.Geometry.Rectangle
 import ArcodeEngine.Engine.Util.OpenGL
 import org.joml.Vector3f
+import org.lwjgl.opengl.GL46.*
 import kotlin.random.Random
 
 
@@ -55,18 +56,18 @@ class Chess(window: Window) : GameState("Chess", window) {
         }
 
     }
-    var BKING = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\bking.png")
-    var WKING = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wking.png")
-    var BROOK = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\brook.png")
-    var WROOK = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wrook.png")
-    var BBISHOP = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\bbishop.png")
-    var WBISHOP = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wbishop.png")
-    var BKNIGHT = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\bknight.png")
-    var WKNIGHT = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wknight.png")
-    var BPAWN = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\bpawn.png")
-    var WPAWN = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wpawn.png")
-    var BQUEEN = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\bqueen.png")
-    var WQUEEN = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wqueen.png")
+    var BKING = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\bking.png", GL_NEAREST, GL_NEAREST)
+    var WKING = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wking.png", GL_NEAREST, GL_NEAREST)
+    var BROOK = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\brook.png", GL_NEAREST, GL_NEAREST)
+    var WROOK = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wrook.png", GL_NEAREST, GL_NEAREST)
+    var BBISHOP = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\bbishop.png", GL_NEAREST, GL_NEAREST)
+    var WBISHOP = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wbishop.png", GL_NEAREST, GL_NEAREST)
+    var BKNIGHT = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\bknight.png", GL_NEAREST, GL_NEAREST)
+    var WKNIGHT = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wknight.png", GL_NEAREST, GL_NEAREST)
+    var BPAWN = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\bpawn.png", GL_NEAREST, GL_NEAREST)
+    var WPAWN = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wpawn.png", GL_NEAREST, GL_NEAREST)
+    var BQUEEN = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\bqueen.png", GL_NEAREST, GL_NEAREST)
+    var WQUEEN = ArcodeEngine.RegisterTexture("src\\main\\kotlin\\ArcodeEngine\\Cabinet\\res\\wqueen.png", GL_NEAREST, GL_NEAREST)
 
     var Pieces = mutableListOf<Piece>()
     val rmap = mapOf(Pair(PieceType.PAWN,Pair(WPAWN, BPAWN)), Pair(PieceType.KNIGHT,Pair(WKNIGHT, BKNIGHT)), Pair(PieceType.BISHOP,Pair(WBISHOP, BBISHOP)), Pair(PieceType.ROOK,Pair(WROOK, BROOK)), Pair(PieceType.QUEEN,Pair(WQUEEN, BQUEEN)), Pair(PieceType.KING,Pair(WKING, BKING)))
@@ -89,7 +90,7 @@ class Chess(window: Window) : GameState("Chess", window) {
     var rect = Rectangle(0f,0f, 5f, 5f)
     override fun Update(ts: Float)
     {
-        if (ticks % 2 == 0)
+        if (ticks % 20 == 0)
         {
             Pieces[Random.nextInt(0, Pieces.size)].X = Random.nextInt(0, 8).also { Pieces[Random.nextInt(0, Pieces.size)].Y = Random.nextInt(0, 8) }
         }

@@ -3,6 +3,7 @@ package ArcodeEngine.Engine
 import ArcodeEngine.Engine.GFX.Shader.Shader
 import ArcodeEngine.Engine.GFX.Texture
 import java.security.InvalidParameterException
+import kotlin.math.min
 
 class ArcodeEngine
 {
@@ -30,6 +31,15 @@ class ArcodeEngine
             return textureID
         }
 
+        fun RegisterTexture(path: String, minFilter: Int, magFilter: Int): Int {
+            val texture = Texture(path, minFilter, magFilter)
+            val textureID = texture.textureID
+
+            textures[textureID] = texture
+
+            return textureID
+        }
+
         /**
          * Load a texture for the specified GameState
          * @param state The GameState you want to register the texture for
@@ -38,6 +48,15 @@ class ArcodeEngine
         @JvmStatic
         fun RegisterProjectTexture(state: GameState, fileName: String): Int {
             val texture = Texture("res/${state.name}/$fileName")
+            val textureID = texture.textureID
+
+            textures[textureID] = texture
+            return textureID
+        }
+
+        @JvmStatic
+        fun RegisterProjectTexture(state: GameState, fileName: String, minFilter: Int, magFilter: Int): Int {
+            val texture = Texture("res/${state.name}/$fileName", minFilter, magFilter)
             val textureID = texture.textureID
 
             textures[textureID] = texture
