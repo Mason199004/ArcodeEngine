@@ -19,7 +19,8 @@ if(Os.isFamily(Os.FAMILY_WINDOWS))
     project.ext.lwjglNatives = "natives-windows"
 else if(Os.isFamily(Os.FAMILY_UNIX) && Os.isArch("arm32"))
     project.ext.lwjglNatives = "natives-linux-arm32"
-
+else if(Os.isFamily(Os.FAMILY_UNIX))
+    project.ext.lwjglNatives = "natives-macos"
     dependencies {
         implementation "org.jetbrains.kotlin:kotlin-stdlib"
 
