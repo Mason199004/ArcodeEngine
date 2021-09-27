@@ -44,6 +44,7 @@ class Window(var dimensions: Pair<Int, Int>, private val fullscreen: Boolean) {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE)
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE)
 
+
         // Create the window
         if(fullscreen)
             window = glfwCreateWindow(1920, 1080, "Arcode Engine", glfwGetPrimaryMonitor(), MemoryUtil.NULL)
